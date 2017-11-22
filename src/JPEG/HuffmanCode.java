@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.plaf.synth.SynthSpinnerUI;
+
 public class HuffmanCode {
 	
 	private HuffmanTable huff;
@@ -79,11 +81,18 @@ public class HuffmanCode {
 		else 
 		{
 			int code = Integer.parseInt(c);
-			String bits = this.data.substring(0, code-1);
-			this.reduceData(code, this.data.length()-1);
-			
-			int dcvalue = this.getDCValue(bits, code);
-			return dcvalue;
+			if (code > 0)
+			{
+				String bits = this.data.substring(0, code);
+				this.reduceData(code, this.data.length());
+				
+				int dcvalue = this.getDCValue(bits, code);
+				return dcvalue;
+			}
+			else
+			{
+				return 0;
+			}
 		} 
 		return 0;
 	}
@@ -142,18 +151,13 @@ public class HuffmanCode {
 	
 	private String getCode(String[][] table)
 	{
-		System.out.println(this.data);
-		try {
-			int k = System.in.read();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		System.out.println("Data: " + this.data);
 		for (int i = 0; i < table.length; i++)
 		{
+			System.out.println(table[i][0]);
 			if (this.data.startsWith(table[i][0]))
 			{
-				this.reduceData(table[i][0].length(), this.data.length()-1);
+				this.reduceData(table[i][0].length(), this.data.length());
 				return table[i][1];
 			}
 		}

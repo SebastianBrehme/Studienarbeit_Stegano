@@ -95,9 +95,8 @@ public class FileParser {
 		
 		this.createHuffmanTables();
 		this.huffTables.printHuffmanTables();
-		//HuffmanCode hc = this.processImageData();
-		//this.printMatrix(hc);
-		
+		HuffmanCode hc = this.processImageData();
+		this.printMatrix(hc);
 	}
 	
 	private List readHuffmanTable(FileInputStream in) throws IOException
@@ -185,14 +184,18 @@ public class FileParser {
 		{
 			//parse to binary
 			int e = data[index++];
-			System.out.println(e);
 			StringBuffer tempSB = new StringBuffer();
-			while (e > 0)
+			int div = e;
+			while (div > 0)
 			{
-				temp = e % 2;
+				temp = div % 2;
 				tempSB.insert(0, temp);
 				
-				e /= 2;
+				div /= 2;
+			}
+			while (tempSB.length() < 8)
+			{
+				tempSB.insert(0, "0");
 			}
 			sb.append(tempSB.toString());
 			
@@ -200,6 +203,7 @@ public class FileParser {
 			if (e == 255 && data[index] == 0)	//0xFF 0x00
 			{
 				index++;
+				i++;
 			}
 		}
 		
