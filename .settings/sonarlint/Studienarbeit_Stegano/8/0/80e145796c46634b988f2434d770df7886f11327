@@ -1,0 +1,49 @@
+
+`squid:UselessImportCheck"0Remove this unused import 'java.io.IOException'.(ªº»Úıÿÿÿÿ8”Œæëı+
+osquid:S00120"WRename this package name to match the regular expression '^[a-z]+(\.[a-z][a-z0-9]*)*$'.(ößšœ
+Y
+squid:S106¹";Replace this usage of System.out or System.err by a logger.(ŸÅ‘×8”Œæëı+
+Esquid:S1481r"'Remove this unused "cl" local variable.(ç‹ÌÅ8”Œæëı+
+Zsquid:S1854…"6Remove this useless assignment to local variable "cl".(ô«ûıÿÿÿÿ8”Œæëı+
+Msquid:S1481’")Remove this unused "tree" local variable.(—‹”ûÿÿÿÿ8”Œæëı+
+Zsquid:S1854"6Remove this useless assignment to local variable "id".(’Ëâ´ÿÿÿÿÿ8”Œæëı+
+Ysquid:S1854~"6Remove this useless assignment to local variable "cl".(ÿ¤Ûûÿÿÿÿ8”Œæëı+
+Ysquid:S1854w"6Remove this useless assignment to local variable "cl".(ÿ¤Ûûÿÿÿÿ8”Œæëı+
+\squid:S1854’"8Remove this useless assignment to local variable "tree".(—‹”ûÿÿÿÿ8”Œæëı+
+Ysquid:S1854s"6Remove this useless assignment to local variable "id".(“¼µüÿÿÿÿ8”Œæëı+
+Ysquid:S1854"6Remove this useless assignment to local variable "id".(’Ëâ´ÿÿÿÿÿ8”Œæëı+
+zsquid:S00116"[Rename this field "LuminanceDCIndex" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Œ¢ÌŞ8”Œæëı+
+Xsquid:S1854N":Remove this useless assignment to local variable "length".(Ë¯¼§8”Œæëı+
+Y
+squid:S106Ã";Replace this usage of System.out or System.err by a logger.(á©öí8”Œæëı+
+|squid:S00116"XRename this field "ChrominanceAC" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ŸÖ§ºûÿÿÿÿ8”Œæëı+
+^
+squid:S106¾";Replace this usage of System.out or System.err by a logger.(Ä­ˆÜıÿÿÿÿ8¡Ğ€ìı+
+`squid:UselessImportCheck"0Remove this unused import 'java.util.Map.Entry'.(±şê¾úÿÿÿÿ8”Œæëı+
+usquid:S00116"VRename this field "LuminanceAC" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÇåÓÊ8”Œæëı+
+^
+squid:S106´";Replace this usage of System.out or System.err by a logger.(„š÷àüÿÿÿÿ8”Œæëı+
+|squid:S00116"XRename this field "ChrominanceDC" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ïÃ…€úÿÿÿÿ8”Œæëı+
+zsquid:S00116"[Rename this field "LuminanceACIndex" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÔÔé’8”Œæëı+
+Tsquid:S1854x"6Remove this useless assignment to local variable "id".(¡•¨ú8”Œæëı+
+^
+squid:S106·";Replace this usage of System.out or System.err by a logger.(ûÇ”°ıÿÿÿÿ8”Œæëı+
+ƒsquid:S1149ñ"_Replace the synchronized class "StringBuffer" by an unsynchronized one such as "StringBuilder".(òÒÜÁøÿÿÿÿ8”Œæëı+
+|squid:S00116"]Rename this field "ChrominanceACIndex" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¾§ÖÛ8”Œæëı+
+^
+squid:S106¼";Replace this usage of System.out or System.err by a logger.(ƒõ³ıÿÿÿÿ8”Œæëı+
+Usquid:S1854†"6Remove this useless assignment to local variable "id".(¡•¨ú8”Œæëı+
+squid:S00116"]Rename this field "ChrominanceDCIndex" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(®ïÏ„øÿÿÿÿ8”Œæëı+
+usquid:S00116"VRename this field "LuminanceDC" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ı†è 8”Œæëı+
+Jsquid:S1481s"'Remove this unused "id" local variable.(“¼µüÿÿÿÿ8”Œæëı+
+^
+squid:S106Á";Replace this usage of System.out or System.err by a logger.(ªü³Üıÿÿÿÿ8”Œæëı+
+`squid:S1226÷"AIntroduce a new variable instead of reusing the parameter "bits".(£İ„Ô8”Œæëı+
+Isquid:S1481N"+Remove this unused "length" local variable.(Ë¯¼§8”Œæëı+
+Tsquid:S1854r"6Remove this useless assignment to local variable "cl".(ç‹ÌÅ8”Œæëı+
+†"squid:ClassVariableVisibilityCheck"QMake codes a static final constant or non-public and provide accessors if needed.(ÜÆ›Û8”Œæëı+
+Y
+squid:S106Æ";Replace this usage of System.out or System.err by a logger.(ÊØ¤¾8”Œæëı+
+Zsquid:S1854Œ"6Remove this useless assignment to local variable "cl".(ô«ûıÿÿÿÿ8”Œæëı+
+Zsquid:UselessImportCheck"*Remove this unused import 'java.util.Map'.(¼è½Òşÿÿÿÿ8®“¸øı+
+^squid:UselessImportCheck".Remove this unused import 'java.util.HashMap'.(™˜”€ùÿÿÿÿ8®“¸øı+

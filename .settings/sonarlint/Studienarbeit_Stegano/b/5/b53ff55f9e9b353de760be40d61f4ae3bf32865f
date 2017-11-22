@@ -1,0 +1,15 @@
+
+osquid:S00120"WRename this package name to match the regular expression '^[a-z]+(\.[a-z][a-z0-9]*)*$'.(φί
+Ksquid:S1068"-Remove this unused "luminance" private field.(­λ•σ8θ½•ώ+
+Lsquid:S1068
+")Remove this unused "width" private field.(•υ¦ςωÿÿÿÿ8θ½•ώ+
+Hsquid:S1068"*Remove this unused "height" private field.(ΕΤ8θ½•ώ+
+k
+squid:S134/"NRefactor this code to not nest more than 3 if/for/while/switch/try statements.(Υ» λ8θ½•ώ+
+k
+squid:S134;"NRefactor this code to not nest more than 3 if/for/while/switch/try statements.(Υ» λ8θ½•ώ+
+p
+squid:S134I"NRefactor this code to not nest more than 3 if/for/while/switch/try statements.(¶Ήύόÿÿÿÿ8θ½•ώ+
+k
+squid:S134T"NRefactor this code to not nest more than 3 if/for/while/switch/try statements.(Υ» λ8θ½•ώ+
+vsquid:S00116"RRename this field "ACindex" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(εήªÿÿÿÿÿ8θ½•ώ+

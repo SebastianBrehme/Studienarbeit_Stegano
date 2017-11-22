@@ -1,0 +1,26 @@
+
+Osquid:S1481§"+Remove this unused "second" local variable.(θ§―γόÿÿÿÿ8”ρµξύ+
+p
+squid:S134B"NRefactor this code to not nest more than 3 if/for/while/switch/try statements.(™Τ¶ϊÿÿÿÿ8“κλύ+
+Fsquid:S1481΄"'Remove this unused "ah" local variable.(ΩζδΞ8ά¬ίξύ+
+^
+squid:S106ή";Replace this usage of System.out or System.err by a logger.(ϊΊ‘όÿÿÿÿ8ιΫΗ•ώ+
+Xsquid:S1854¦"9Remove this useless assignment to local variable "first".(ϋ†Β8ά¬ίξύ+
+Tsquid:UselessImportCheck")Remove this unused import 'java.io.File'.(†Π¥Ε8ÿΦπλύ+
+[squid:UselessImportCheck"0Remove this unused import 'java.nio.file.Files'.(‚ƒό8ÿΦπλύ+
+Usquid:S1854µ"6Remove this useless assignment to local variable "al".(λ–φ­8ά¬ίξύ+
+^
+squid:S106Ό";Replace this usage of System.out or System.err by a logger.(¨¶ΡΝώÿÿÿÿ8ιΫΗ•ώ+
+^squid:S1854§":Remove this useless assignment to local variable "second".(θ§―γόÿÿÿÿ8ά¬ίξύ+
+ƒsquid:S1149½"_Replace the synchronized class "StringBuffer" by an unsynchronized one such as "StringBuilder".(ΰ«Κύÿÿÿÿ8“·Ιπύ+
+p
+squid:S1346"NRefactor this code to not nest more than 3 if/for/while/switch/try statements.(™Τ¶ϊÿÿÿÿ8“κλύ+
+Isquid:S1481¦"*Remove this unused "first" local variable.(ϋ†Β8”ρµξύ+
+Y
+squid:S106Ψ";Replace this usage of System.out or System.err by a logger.(ΖβΩ8τΙ•ώ+
+Usquid:S1854΄"6Remove this useless assignment to local variable "ah".(ΩζδΞ8ά¬ίξύ+
+squid:S2093'"^Change this "try" to a try-with-resources. (sonar.java.source not set. Assuming 7 or greater.)(η£κϊÿÿÿÿ8“κλύ+
+osquid:S00120"WRename this package name to match the regular expression '^[a-z]+(\.[a-z][a-z0-9]*)*$'.(φί
+Fsquid:S1481µ"'Remove this unused "al" local variable.(λ–φ­8ά¬ίξύ+
+^
+squid:S106ΰ";Replace this usage of System.out or System.err by a logger.(ήÒ—όÿÿÿÿ8¬φύ•ώ+
