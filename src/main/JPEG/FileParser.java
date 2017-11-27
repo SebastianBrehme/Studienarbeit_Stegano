@@ -1,4 +1,4 @@
-package JPEG;
+package main.JPEG;
 
 import java.io.File;
 import java.io.FileInputStream;

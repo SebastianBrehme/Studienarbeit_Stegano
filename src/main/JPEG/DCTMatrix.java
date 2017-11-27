@@ -1,4 +1,4 @@
-package JPEG;
+package main.JPEG;
 
 public class DCTMatrix
 {

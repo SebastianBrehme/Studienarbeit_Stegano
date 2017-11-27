@@ -10,11 +10,11 @@ public class TestBitConverter {
 
 	@Test
 	public void testConvertToBitString() {
-		assertEquals("0", BitConverter.convertToBitString(0));
-		assertEquals("1", BitConverter.convertToBitString(1));
-		assertEquals("1010", BitConverter.convertToBitString(10));
-		assertEquals("110010", BitConverter.convertToBitString(50));
-		assertEquals("1100100", BitConverter.convertToBitString(100));
+		assertEquals("00000000", BitConverter.convertToBitString(0));
+		assertEquals("00000001", BitConverter.convertToBitString(1));
+		assertEquals("00001010", BitConverter.convertToBitString(10));
+		assertEquals("00110010", BitConverter.convertToBitString(50));
+		assertEquals("01100100", BitConverter.convertToBitString(100));
 		assertEquals("10010110", BitConverter.convertToBitString(150));
 		assertEquals("11001000", BitConverter.convertToBitString(200));
 		assertEquals("11100110", BitConverter.convertToBitString(230));
