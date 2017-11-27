@@ -7,6 +7,8 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
+import main.Util.BitConverter;
+
 public class FileParser {
 	private String filepath = "";
 	
@@ -173,41 +175,29 @@ public class FileParser {
 			components[i][1] = temp / 2;							//DC Table Number
 			components[i][2] = temp % 2;							//AC Table Number
 		}
-		int ss = data[index++]; //start of spectral selection
-		int se = data[index++]; //end of spectral selection
+		int startSpectralSelection = data[index++]; //start of spectral selection
+		int endSpectralSelection = data[index++]; //end of spectral selection
 		int temp = data[index++];
 		int ah = temp / 2;
 		int al = temp % 2;
 		
-		StringBuilder sb = new StringBuilder();
+		StringBuilder bitStringData = new StringBuilder();
 		for (int i = index; i < data.length; i++)
 		{
 			//parse to binary
-			int e = data[index++];
-			StringBuffer tempSB = new StringBuffer();
-			int div = e;
-			while (div > 0)
-			{
-				temp = div % 2;
-				tempSB.insert(0, temp);
-				
-				div /= 2;
-			}
-			while (tempSB.length() < 8)
-			{
-				tempSB.insert(0, "0");
-			}
-			sb.append(tempSB.toString());
+			int value = data[index++];
+						
+			bitStringData.append(BitConverter.convertToBitString(value));
 			
 			// skip "stuff bit"
-			if (e == 255 && data[index] == 0)	//0xFF 0x00
+			if (value == 255 && data[index] == 0)	//0xFF 0x00
 			{
 				index++;
 				i++;
 			}
 		}
 		
-		HuffmanCode hc = new HuffmanCode(this.huffTables, sb.toString(), ss, se);
+		HuffmanCode hc = new HuffmanCode(this.huffTables, bitStringData.toString(), startSpectralSelection, endSpectralSelection);
 		hc.decode();
 		return hc;
 	} 
