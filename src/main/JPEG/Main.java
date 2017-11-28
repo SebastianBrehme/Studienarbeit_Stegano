@@ -15,6 +15,10 @@ public class Main {
 		//x.setFilePath("D:\\dhbw\\Studienarbeit\\Bilder\\jpg\\oneBlack.jpg");
 		//x.readFile();
 		x.readFileBytes();
+		x.createHuffmanTables();
+		x.huffTables.printHuffmanTables();
+		HuffmanCode hc = x.processImageData();
+		x.printMatrix(hc);
 	}
 
 }

@@ -16,7 +16,7 @@ public class FileParser {
 	
 	private Object[][] huffmantables;
 	
-	private HuffmanTable huffTables;
+	public HuffmanTable huffTables;
 	
 	private List<Integer> imageData;
 	
@@ -30,6 +30,7 @@ public class FileParser {
 	{
 		this.filepath = file;
 	}
+	
 	public String getFilePath()
 	{
 		return this.filepath;
@@ -51,7 +52,7 @@ public class FileParser {
 				{
 					this.status = 2;
 				}
-				else if (c == 196) //0xC4
+				else if (c == 196) //0xC4 DHT - Huffmantable
 				{
 					if (status == 2)
 					{
@@ -63,7 +64,7 @@ public class FileParser {
 						this.status = 0;
 					}
 				}
-				else if (c == 218)	//0xDA
+				else if (c == 218)	//0xDA SOS - Start of Scan
 				{
 					if (status == 2)
 					{
@@ -95,10 +96,7 @@ public class FileParser {
 			}
 		}
 		
-		this.createHuffmanTables();
-		this.huffTables.printHuffmanTables();
-		HuffmanCode hc = this.processImageData();
-		this.printMatrix(hc);
+		
 	}
 	
 	private List readHuffmanTable(FileInputStream in) throws IOException
@@ -148,7 +146,7 @@ public class FileParser {
 		return x;
 	}
 	
-	private void createHuffmanTables()
+	public void createHuffmanTables()
 	{
 		if (this.huffmantables[1] == null)
 		{
@@ -160,26 +158,27 @@ public class FileParser {
 		}
 	}
 
-	private HuffmanCode processImageData()
+	public HuffmanCode processImageData()
 	{
 		int[] data = this.imageData.stream().mapToInt(i->i).toArray();
 		int index = 0;
-		int first = data[index++]; //should be 0x00
-		int second = data[index++]; //should be 0x0C
+		int first = data[index++]; //should be 0x00 - for size
+		int second = data[index++]; //should be 0x0C - for size
+		
 		int numberofcomponents = data[index++];
 		int[][] components = new int[numberofcomponents][3];
 		for (int i = 0; i < numberofcomponents; i++)
 		{
 			components[i][0] = data[index++];	//component id
 			int temp = data[index++];
-			components[i][1] = temp / 2;							//DC Table Number
-			components[i][2] = temp % 2;							//AC Table Number
+			components[i][1] = BitConverter.getHigherBits(temp); //DC Table Number
+			components[i][2] = BitConverter.getLowerBits(temp);	//AC Table Number
 		}
+		//Only for progressiv mode, currently not used
 		int startSpectralSelection = data[index++]; //start of spectral selection
 		int endSpectralSelection = data[index++]; //end of spectral selection
-		int temp = data[index++];
-		int ah = temp / 2;
-		int al = temp % 2;
+		int successivApproximation = data[index++]; //two 4 bit fields
+		
 		
 		StringBuilder bitStringData = new StringBuilder();
 		for (int i = index; i < data.length; i++)
@@ -192,7 +191,7 @@ public class FileParser {
 			// skip "stuff bit"
 			if (value == 255 && data[index] == 0)	//0xFF 0x00
 			{
-				index++;
+				index++; //sicher???
 				i++;
 			}
 		}
@@ -202,7 +201,7 @@ public class FileParser {
 		return hc;
 	} 
 	
-	private void printMatrix(HuffmanCode hc)
+	public void printMatrix(HuffmanCode hc)
 	{
 		List m = hc.getDecodedData();
 		for(int k = 0; k < m.size(); k++)
