@@ -10,9 +10,15 @@ import java.util.List;
 import main.Util.BitConverter;
 
 public class FileParser {
-	private String filepath = "";
 	
-	private int status;	// 0 = INITIAL, 2 = read FF, 3 = EOF
+	enum Status{
+		INITIAL,
+		READFF,
+		EOF
+	}
+	private Status status;	
+	
+	private String filepath = "";	
 	
 	private Object[][] huffmantables;
 	
@@ -22,7 +28,7 @@ public class FileParser {
 	
 	public FileParser()
 	{
-		this.status = 0;
+		this.status = Status.INITIAL;
 		huffmantables = new Object[4][];
 	}
 	
@@ -50,38 +56,38 @@ public class FileParser {
 			{
 				if (c == 255)	//0xFF
 				{
-					this.status = 2;
+					this.status = Status.READFF;
 				}
 				else if (c == 196) //0xC4 DHT - Huffmantable
 				{
-					if (status == 2)
+					if (status == Status.READFF)
 					{
 						List x = this.readHuffmanTable(in);
 						this.huffmantables[huffTablesIndex++] = x.toArray();
 					}
 					else
 					{
-						this.status = 0;
+						this.status = Status.INITIAL;
 					}
 				}
 				else if (c == 218)	//0xDA SOS - Start of Scan
 				{
-					if (status == 2)
+					if (status == Status.READFF)
 					{
 						this.imageData = this.readImageData(in);
 					}
 					else
 					{
-						this.status = 0;
+						this.status = Status.INITIAL;
 				
 					}
 				}
 				else
 				{
-					this.status = 0;
+					this.status = Status.INITIAL;
 				}
 				
-				if (this.status == 3)
+				if (this.status == Status.EOF)
 				{
 					break;
 				}
@@ -111,11 +117,11 @@ public class FileParser {
 			}
 			else
 			{
-				this.status = 2;
+				this.status = Status.READFF;
 				return x;
 			}
 		}
-		this.status = 3;
+		this.status = Status.EOF;
 		return x;
 	}
 	
