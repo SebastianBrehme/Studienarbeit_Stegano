@@ -1,27 +1,24 @@
 package main.JPEG;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.plaf.synth.SynthSpinnerUI;
-
 public class HuffmanCode {
 	
-	private HuffmanTable huff;
+	private HuffmanTable huffmanTable;
 	private String data;
-	private List decodedData;
-	private int ss;
-	private int se;
-	private int height;
-	private int width;
+	private List<DCTMatrix> decodedData;
+	private int startSpectralSelection; //not used
+	private int endSpectralSelection; //not used
+	private int height;//not used
+	private int width;//not used
 
 	public HuffmanCode(HuffmanTable huffmanTable, String encodedData, int startspectralselection, int endspectralselection /*, int width, int height*/)
 	{
-		this.huff = huffmanTable;
+		this.huffmanTable = huffmanTable;
 		this.data = encodedData;
-		this.ss = startspectralselection;
-		this.se = endspectralselection;
+		this.startSpectralSelection = startspectralselection;
+		this.endSpectralSelection = endspectralselection;
 		//this.height = height;
 		//this.width = width;
 		
@@ -48,21 +45,21 @@ public class HuffmanCode {
 		while (!done)
 		{
 			DCTMatrix luminanceMatrix = new DCTMatrix(true, matrixwidth, matrixheight);
-			int dcvalue = this.decodeDC(this.huff.LuminanceDC);
+			int dcvalue = this.decodeDC(this.huffmanTable.LuminanceDC);
 			luminanceMatrix.setDC(dcvalue);
-			this.decodeAC(this.huff.LuminanceAC, luminanceMatrix);
+			this.decodeAC(this.huffmanTable.LuminanceAC, luminanceMatrix);
 			this.decodedData.add(luminanceMatrix);
 			
 			DCTMatrix chrominanceMatrixCb = new DCTMatrix(false, matrixwidth ,matrixheight);
-			dcvalue = this.decodeDC(this.huff.ChrominanceDC);
+			dcvalue = this.decodeDC(this.huffmanTable.ChrominanceDC);
 			chrominanceMatrixCb.setDC(dcvalue);
-			this.decodeAC(this.huff.ChrominanceAC, chrominanceMatrixCb);
+			this.decodeAC(this.huffmanTable.ChrominanceAC, chrominanceMatrixCb);
 			this.decodedData.add(chrominanceMatrixCb);
 			
 			DCTMatrix chrominanceMatrixCr = new DCTMatrix(false, matrixwidth, matrixheight);
-			dcvalue = this.decodeDC(this.huff.ChrominanceDC);
+			dcvalue = this.decodeDC(this.huffmanTable.ChrominanceDC);
 			chrominanceMatrixCr.setDC(dcvalue);
-			this.decodeAC(this.huff.ChrominanceAC, chrominanceMatrixCr);
+			this.decodeAC(this.huffmanTable.ChrominanceAC, chrominanceMatrixCr);
 			this.decodedData.add(chrominanceMatrixCr);
 			
 			hsum += matrixheight;
@@ -73,20 +70,20 @@ public class HuffmanCode {
 			}
 		}
 	}
-	
+	//the method to call
 	private int decodeDC(String[][] table)
 	{
 		String c = this.getCode(table);
-		if (c == null) { /*error*/ } 
+		if (c == null) { /*error*/ } //TODO react when error occurs
 		else 
 		{
 			int code = Integer.parseInt(c);
 			if (code > 0)
 			{
 				String bits = this.data.substring(0, code);
-				this.reduceData(code, this.data.length());
+				this.reduceData(code, this.data.length()); //the additional bits
 				
-				int dcvalue = this.getDCValue(bits, code);
+				int dcvalue = this.getDCValue(bits, code); //the actual DC Value
 				return dcvalue;
 			}
 			else
@@ -99,7 +96,7 @@ public class HuffmanCode {
 	
 	private void decodeAC(String[][] table, DCTMatrix matrix)
 	{
-		for (int i = 1; i <= this.se; i++)
+		for (int i = 1; i <= this.endSpectralSelection; i++)
 		{
 			String code = this.getCode(table);
 			if (code == null) { /*error*/ } 
@@ -120,6 +117,7 @@ public class HuffmanCode {
 		
 	}
 	
+	//gets the real DC value of the additional bits
 	private int getDCValue(String bits, int length)
 	{
 		double x = Math.pow(2, length);
@@ -149,6 +147,7 @@ public class HuffmanCode {
 		}
 	}
 	
+	//returns the value thats is represented by the huffmancode the data starts with
 	private String getCode(String[][] table)
 	{
 		System.out.println("Data: " + this.data);
