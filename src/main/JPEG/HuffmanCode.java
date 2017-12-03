@@ -3,6 +3,8 @@ package main.JPEG;
 import java.util.ArrayList;
 import java.util.List;
 
+import main.Util.BitConverter;
+
 public class HuffmanCode {
 	
 	private HuffmanTable huffmanTable;
@@ -73,7 +75,7 @@ public class HuffmanCode {
 	//the method to call
 	private int decodeDC(String[][] table)
 	{
-		String c = this.getCode(table);
+		String c = this.getNextHuffmanDecodedValue(table);
 		if (c == null) { /*error*/ } //TODO react when error occurs
 		else 
 		{
@@ -81,9 +83,9 @@ public class HuffmanCode {
 			if (code > 0)
 			{
 				String bits = this.data.substring(0, code);
-				this.reduceData(code, this.data.length()); //the additional bits
+				this.reduceData(code, this.data.length()); //remove the additional bits from the data stream
 				
-				int dcvalue = this.getDCValue(bits, code); //the actual DC Value
+				int dcvalue = this.getDecodedDCACValue(bits, code); //the actual DC Value
 				return dcvalue;
 			}
 			else
@@ -94,31 +96,76 @@ public class HuffmanCode {
 		return 0;
 	}
 	
-	private void decodeAC(String[][] table, DCTMatrix matrix)
+	private DCTMatrix decodeAC(String[][] table, DCTMatrix matrix)
 	{
-		for (int i = 1; i <= this.endSpectralSelection; i++)
+		for (int position = 1; position <= this.endSpectralSelection; position++)
 		{
-			String code = this.getCode(table);
-			if (code == null) { /*error*/ } 
+			String code_s = this.getNextHuffmanDecodedValue(table);
+			if (code_s == null) { /*error*/ } //TODO react when error occurs
 			else 
 			{
-				int c = Integer.parseInt(code);
-				if (c == 0)
+				int code = Integer.parseInt(code_s);
+				if(code == 0) //remaining values are zero
 				{
-					return;
+					return matrix;
+				}				
+				else if(code == 0xF0) //next 16 values are zero
+				{
+					for(int j=0;j<16;j++) {
+						matrix.setAC(position, 0);
+						position++;
+					}
+					//to avoid to jump over one position; 
+					//the for loop does the last position++; 
+					//positon has to stay on the last inserted value
+					position--;
 				}
 				else
 				{
-					matrix.setAC(c);
+					int zeroRun = BitConverter.getHigherBits(code);
+					int magnitude = BitConverter.getLowerBits(code);					
+					
+					String bits = this.data.substring(0, magnitude);
+					this.reduceData(magnitude, this.data.length());
+					
+					int value = this.getDecodedDCACValue(bits, magnitude);					
+					
+					for(int j = 0;j<zeroRun;j++) {
+						matrix.setAC(position, 0);
+						position++;
+					}
+					
+					matrix.setAC(position,value);
 				}
 			}
 		}
-		
-		
+		return matrix;		
 	}
 	
-	//gets the real DC value of the additional bits
-	private int getDCValue(String bits, int length)
+	
+	/* 
+	 * gets the real DC/AC value of the additional bits
+	 * for AC 0 Value is not possible
+	 * 
+	 * DC Code	Size	Additional Bits									DC Value
+	 * 00		0	 					  									  0
+	 * 01		1						0	1							   -1	1
+	 * 02		2					00,01	10,11					    -3,-2	2,3
+	 * 03		3		  000,001,010,011	100,101,110,111		  -7,-6,-5,-4	4,5,6,7
+	 * 04		4			0000,...,0111	1000,...,1111		   -15,...,-8	8,...,15
+	 * 05		5			  0 0000,...	...,1 1111			  -31,...,-16	16,...,31
+	 * 06		6			 00 0000,...	...,11 1111			  -63,...,-32	32,...,63
+	 * 07		7		    000 0000,...	...,111 1111		 -127,...,-64	64,...,127
+	 * 08		8		   0000 0000,...	...,1111 1111		-255,...,-128	128,...,255
+	 * 09		9		 0 0000 0000,...	...,1 1111 1111		-511,...,-256	256,...,511
+	 * 0A		10		00 0000 0000,...	...,11 1111 1111   -1023,...,-512	512,...,1023
+	 * 0B		11		000 0000 0000,...	...,111 1111 1111 -2047,...,-1024	1024,...,2047
+	 *
+	 *@param bits - the bits in the data stream
+	 *@param length - the lengths of the bits
+	 *@return DC Value
+	 */
+	private int getDecodedDCACValue(String bits, int length)
 	{
 		double x = Math.pow(2, length);
 		int min = ((int)x-1) * (-1);
@@ -147,13 +194,13 @@ public class HuffmanCode {
 		}
 	}
 	
-	//returns the value thats is represented by the huffmancode the data starts with
-	private String getCode(String[][] table)
+	//returns the next huffman encoded value in the data stream
+	private String getNextHuffmanDecodedValue(String[][] table)
 	{
 		System.out.println("Data: " + this.data);
 		for (int i = 0; i < table.length; i++)
 		{
-			System.out.println(table[i][0]);
+			System.out.println("Trying: "+table[i][0]);
 			if (this.data.startsWith(table[i][0]))
 			{
 				this.reduceData(table[i][0].length(), this.data.length());

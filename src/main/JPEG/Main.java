@@ -11,7 +11,7 @@ public class Main {
 		FileParser x = new FileParser();
 		
 		//x.setFilePath("TestImages\\8auf8BK.jpg");
-		x.setFilePath("TestImages\\huff_simple0.jpg");
+		x.setFilePath("TestImages"+File.separator+"huff_simple0.jpg");
 		//x.setFilePath("D:\\dhbw\\Studienarbeit\\Bilder\\jpg\\oneBlack.jpg");
 		//x.readFile();
 		x.readFileBytes();
