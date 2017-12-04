@@ -22,6 +22,16 @@ public class TestBitConverter {
 	}
 	
 	@Test
+	public void testConvertToBitStringWithLength() {
+		assertEquals("0", BitConverter.convertToBitString(0,1));
+		assertEquals("00001", BitConverter.convertToBitString(1,5));
+		assertEquals("0000001010", BitConverter.convertToBitString(10,10));
+		assertEquals("00110010", BitConverter.convertToBitString(50,8));
+		assertEquals("1100100", BitConverter.convertToBitString(100,5));
+		assertEquals("010010110", BitConverter.convertToBitString(150,9));
+	}
+	
+	@Test
 	public void testgetLowerBits() {
 		assertEquals(1, BitConverter.getLowerBits(0x11));
 		assertEquals(2, BitConverter.getLowerBits(0x12));

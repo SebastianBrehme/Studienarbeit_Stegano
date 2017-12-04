@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import main.Util.BitConverter;
+
 public class HuffmanTable {
 
 	
@@ -23,7 +25,7 @@ public class HuffmanTable {
 	
 	public HuffmanTable(Object[] content)
 	{
-		this.initTables(content);
+		this.extractTablesOfDataSteam(content);
 	}
 	
 	public HuffmanTable(Object[] content0, Object[] content1, Object[] content2, Object[] content3)
@@ -33,8 +35,8 @@ public class HuffmanTable {
 		this.initTable(content2);
 		this.initTable(content3);
 	}
-	
-	private void initTables(Object[] table)
+	//wenn alle HuffmanTables als ein Datenstrom kommen
+	private void extractTablesOfDataSteam(Object[] table) //int
 	{
 		//length 
 		int length = (int)table[0] * (16*16) + (int)table[1];
@@ -43,58 +45,70 @@ public class HuffmanTable {
 		//loop
 		while (index < length)
 		{
-			List content = new ArrayList<>();
+			List<Integer> contentSingleTable = new ArrayList<>();
 			
-			content.add(table[index]);
-			int l = 0;
-			for (int i = index + 1; i < index + 17; i++)
+			contentSingleTable.add((int)table[index++]); //class and identifier
+			int numberOfValues = 0; //total number of encoded values
+			
+			for (int i = 0; i < 16; i++) //count of Huffman codes, 16 length values
 			{
-				l += (int) table[i];
-				content.add(table[i]);
+				numberOfValues += (int) table[index];
+				contentSingleTable.add((int)table[index]);
+				index++;
 			}
-			for (int i = 0; i < l; i++)
+			
+			for (int i = 0; i < numberOfValues; i++) //read encoded values
 			{
-				content.add(table[index + i + 17]);
+				contentSingleTable.add((int)table[index++]);
 			}
-			int fulllength = l + 19;
-			if (fulllength > 255)
-			{
-				content.add(0, fulllength / 256);
-				content.add(1, fulllength % 256);
-			}
-			else
-			{
-				content.add(0, 0);
-				content.add(1, fulllength);
-			}
-			index += l + 17;
-			initTable(content.toArray());
+			
+			int fullTableLength = numberOfValues + 19; //19=2(Länge) + 1(Id, Class) + 16(Anzahlen)
+//			if (fullTableLength > 255)
+//			{
+//				contentSingleTable.add(0, fullTableLength / 256); //das sind die ersten zwei bytes für die länge
+//				contentSingleTable.add(1, fullTableLength % 256);
+//			}
+//			else
+//			{
+//				contentSingleTable.add(0, 0);
+//				contentSingleTable.add(1, fullTableLength);
+//			}
+			contentSingleTable.add(0, fullTableLength / 256); //das sind die ersten zwei bytes für die länge
+			contentSingleTable.add(1, fullTableLength % 256);
+
+			initTable(contentSingleTable.toArray());
 		}
 	}
 	
-	private void initTable(Object[] table)
+	private void initTable(Object[] table) //int[]
 	{
 		//length 
-		int length = (int)table[0] * (16*16) + (int)table[1];
+		int tableLength = (int)table[0] * (16*16) + (int)table[1]; //table.length should be the same; not used...
 		
 		//code count for each length
 		int[] counts = new int[16];
-		counts[0] = (int) table[3];
-		counts[1] = (int) table[4];
-		counts[2] = (int) table[5];
-		counts[3] = (int) table[6];
-		counts[4] = (int) table[7];
-		counts[5] = (int) table[8];
-		counts[6] = (int) table[9];
-		counts[7] = (int) table[10];
-		counts[8] = (int) table[11];
-		counts[9] = (int) table[12];
-		counts[10] = (int) table[13];
-		counts[11] = (int) table[14];
-		counts[12] = (int) table[15];
-		counts[13] = (int) table[16];
-		counts[14] = (int) table[17];
-		counts[15] = (int) table[18];
+		for(int i=0;i<counts.length;i++) {
+			counts[i] = (int) table[i+3];
+		}
+		
+//		counts[0] = (int) table[3];//TODO for loop
+//		counts[1] = (int) table[4];
+//		counts[2] = (int) table[5];
+//		counts[3] = (int) table[6];
+//		counts[4] = (int) table[7];
+//		counts[5] = (int) table[8];
+//		counts[6] = (int) table[9];
+//		counts[7] = (int) table[10];
+//		counts[8] = (int) table[11];
+//		counts[9] = (int) table[12];
+//		counts[10] = (int) table[13];
+//		counts[11] = (int) table[14];
+//		counts[12] = (int) table[15];
+//		counts[13] = (int) table[16];
+//		counts[14] = (int) table[17];
+//		counts[15] = (int) table[18];
+		
+		
 		//codes sorted by their length
 		int tableIndex = 19;
 		this.codes = new int[16][];
@@ -104,41 +118,41 @@ public class HuffmanTable {
 			codes[i] = new int[counts[i] + 1];
 			codes[i][0] = counts[i];
 			codecount += counts[i];
-			for (int j = 1; j < counts[i] + 1; j++)
+			for (int j = 1; j < counts[i] + 1; j++) //counts[i] +1 = codes[i].length
 			{
 				codes[i][j] = (int) table[tableIndex++];
 			}
 		}
 		
 		//DHT class and ID
-		int cl = 0;
-		int id = 0;
+		int dhtClass = 0;
+		int dhtID = 0;
 		int table2 = (int) table[2];
 		if (table2 == 0)
 		{
-			cl = 0;
-			id = 0;
+			dhtClass = 0;
+			dhtID = 0;
 			this.LuminanceDC = new String[codecount][2];
 			this.LuminanceDCIndex = 0;
 		}
 		else if (table2 == 1)
 		{
-			cl = 0;
-			id = 1;
+			dhtClass = 0;
+			dhtID = 1;
 			this.ChrominanceDC = new String[codecount][2];
 			this.ChrominanceDCIndex = 0;
 		}
 		else if (table2 == 16)
 		{
-			cl = 1;
-			id = 0;
+			dhtClass = 1;
+			dhtID = 0;
 			this.LuminanceAC = new String[codecount][2];
 			this.LuminanceACIndex = 0;
 		}
 		else if (table2 == 17)
 		{
-			cl = 1;
-			id = 1;
+			dhtClass = 1;
+			dhtID = 1;
 			this.ChrominanceAC = new String[codecount][2];
 			this.ChrominanceACIndex = 0;
 		}
@@ -218,7 +232,7 @@ class TreeNode
 				{
 					int k = hufftable.codes[length-1].length - hufftable.codes[length-1][0];
 					String codetopass = Integer.toString(hufftable.codes[length-1][k]);
-					String bitstopass = convertToString(length, bits);
+					String bitstopass = BitConverter.convertToBitString(bits, length);
 					hufftable.setCode(table, codetopass, bitstopass);
 					hufftable.codes[length-1][0] -= 1;
 				}
@@ -234,23 +248,5 @@ class TreeNode
 				this.child1 = new TreeNode(this, length+1, hufftable, table, bits*2 + 1);
 			}
 		}
-	}
-	
-	private String convertToString(int length, int bits)
-	{
-		StringBuffer x = new StringBuffer();
-		while (bits > 0)
-		{
-			int k = bits % 2;
-			x.insert(0, Integer.toString(k));
-			
-			bits = bits / 2;
-		}
-		while (length > x.length())
-		{
-			x.insert(0, "0");
-		}
-		
-		return x.toString();
 	}
 }

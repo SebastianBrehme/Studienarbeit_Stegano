@@ -13,9 +13,9 @@ import main.JPEG.HuffmanCode;
 public class TestHuffmanCode {
 
 	@Test
-	public void testGetDCValue() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException,
+	public void testGetDecodedDCACValue() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException,
 			NoSuchMethodException, SecurityException {
-		Method method = HuffmanCode.class.getDeclaredMethod("getDCValue", String.class, int.class);
+		Method method = HuffmanCode.class.getDeclaredMethod("getDecodedDCACValue", String.class, int.class);
 		method.setAccessible(true);
 		HuffmanCode huffmancode = new HuffmanCode(null, "", 0, 63);
 

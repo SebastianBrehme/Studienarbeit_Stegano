@@ -62,7 +62,7 @@ public class FileParser {
 				{
 					if (status == Status.READFF)
 					{
-						List x = this.readHuffmanTable(in);
+						List<Integer> x = this.readHuffmanTable(in);
 						this.huffmantables[huffTablesIndex++] = x.toArray();
 					}
 					else
@@ -105,9 +105,9 @@ public class FileParser {
 		
 	}
 	
-	private List readHuffmanTable(FileInputStream in) throws IOException
+	private List<Integer> readHuffmanTable(FileInputStream in) throws IOException
 	{
-		List x = new ArrayList<>();
+		List<Integer> x = new ArrayList<>();
 		int huf;
 		while ((huf = in.read()) != -1)
 		{
@@ -127,7 +127,7 @@ public class FileParser {
 	
 	private List<Integer> readImageData(FileInputStream in) throws IOException
 	{
-		List x = new ArrayList<>();
+		List<Integer> x = new ArrayList<>();
 		int d;
 		while ((d = in.read()) != -1)
 		{
