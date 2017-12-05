@@ -17,7 +17,7 @@ public class TestHuffmanCode {
 			NoSuchMethodException, SecurityException {
 		Method method = HuffmanCode.class.getDeclaredMethod("getDecodedDCACValue", String.class, int.class);
 		method.setAccessible(true);
-		HuffmanCode huffmancode = new HuffmanCode(null, "", 0, 63);
+		HuffmanCode huffmancode = new HuffmanCode(null, null, "", 0, 63);
 
 		assertEquals(0, (int) (method.invoke(huffmancode, "", 0)));
 		assertEquals(-1, (int) (method.invoke(huffmancode, "0", 1)));
@@ -69,7 +69,7 @@ public class TestHuffmanCode {
 		Method method  = HuffmanCode.class.getDeclaredMethod("getNextHuffmanDecodedValue", String[][].class);
 		method.setAccessible(true);		
 		
-		HuffmanCode huffmancode = new HuffmanCode(null, "00101111", 0, 63);
+		HuffmanCode huffmancode = new HuffmanCode(null, null, "00101111", 0, 63);
 		String[][] table = {{"00","0"},{"101","5"},{"111","18"}};
 		
 		assertEquals("0", (String)method.invoke(huffmancode, (Object)table));
@@ -83,7 +83,7 @@ public class TestHuffmanCode {
 		Method method  = HuffmanCode.class.getDeclaredMethod("decodeDC", String[][].class);
 		method.setAccessible(true);		
 		
-		HuffmanCode huffmancode = new HuffmanCode(null, "00"+"101"+"1110"+"111"+"01111111111", 0, 63);
+		HuffmanCode huffmancode = new HuffmanCode(null, null, "00"+"101"+"1110"+"111"+"01111111111", 0, 63);
 		String[][] table = {{"00","0"},{"101","4"},{"111","11"}};
 		
 		assertEquals(0, (int)method.invoke(huffmancode, (Object)table));
@@ -97,7 +97,7 @@ public class TestHuffmanCode {
 		Method method  = HuffmanCode.class.getDeclaredMethod("decodeAC", String[][].class, DCTMatrix.class);
 		method.setAccessible(true);		
 		
-		HuffmanCode huffmancode = new HuffmanCode(null, "101"+"101"+"11110"+"1110"+"1101"+"00", 0, 63);
+		HuffmanCode huffmancode = new HuffmanCode(null, null, "101"+"101"+"11110"+"1110"+"1101"+"00", 0, 63);
 		String[][] table = {{"00","0"},{"101","3"},{"1110","100"},{"11110","240"}};
 		
 		int[][] expect = new int[8][8];

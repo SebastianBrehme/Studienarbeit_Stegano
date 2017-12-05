@@ -1,0 +1,15 @@
+
+Dsquid:S1068"-Remove this unused "luminance" private field.(­ë•ó
+Esquid:S1068
+")Remove this unused "width" private field.(•õ¦òùÿÿÿÿ
+Asquid:S1068"*Remove this unused "height" private field.(ÅœÔ˜
+d
+squid:S134/"NRefactor this code to not nest more than 3 if/for/while/switch/try statements.(Õ» ë
+d
+squid:S134;"NRefactor this code to not nest more than 3 if/for/while/switch/try statements.(Õ» ë
+i
+squid:S134I"NRefactor this code to not nest more than 3 if/for/while/switch/try statements.(¶¹ıüÿÿÿÿ
+d
+squid:S134T"NRefactor this code to not nest more than 3 if/for/while/switch/try statements.(Õ» ë
+osquid:S00116"RRename this field "ACindex" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(åŞªÿÿÿÿÿ
+osquid:S00120"WRename this package name to match the regular expression '^[a-z]+(\.[a-z][a-z0-9]*)*$'.(ªˆåÔ

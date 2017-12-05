@@ -20,6 +20,8 @@ public class FileParser {
 	
 	private String filepath = "";	
 	
+	private StartOfFrameMarker sofMarker;
+	
 	private Object[][] huffmantables;
 	
 	public HuffmanTable huffTables;
@@ -58,11 +60,19 @@ public class FileParser {
 				{
 					this.status = Status.READFF;
 				}
+				else if (c == 192) //0xC0 Start of Frame Marker
+				{
+					if (this.status == Status.READFF)
+					{
+						List<Integer> x = this.readNextSegment(in);
+						this.sofMarker = new StartOfFrameMarker(x);
+					}
+				}
 				else if (c == 196) //0xC4 DHT - Huffmantable
 				{
-					if (status == Status.READFF)
+					if (this.status == Status.READFF)
 					{
-						List<Integer> x = this.readHuffmanTable(in);
+						List<Integer> x = this.readNextSegment(in);
 						this.huffmantables[huffTablesIndex++] = x.toArray();
 					}
 					else
@@ -72,7 +82,7 @@ public class FileParser {
 				}
 				else if (c == 218)	//0xDA SOS - Start of Scan
 				{
-					if (status == Status.READFF)
+					if (this.status == Status.READFF)
 					{
 						this.imageData = this.readImageData(in);
 					}
@@ -105,15 +115,15 @@ public class FileParser {
 		
 	}
 	
-	private List<Integer> readHuffmanTable(FileInputStream in) throws IOException
+	private List<Integer> readNextSegment(FileInputStream in) throws IOException
 	{
 		List<Integer> x = new ArrayList<>();
-		int huf;
-		while ((huf = in.read()) != -1)
+		int nextValue;
+		while ((nextValue = in.read()) != -1)
 		{
-			if (huf != 255) //0xFF
+			if (nextValue != 255)
 			{
-				x.add(huf);
+				x.add(nextValue);
 			}
 			else
 			{
@@ -202,7 +212,7 @@ public class FileParser {
 			}
 		}
 		
-		HuffmanCode hc = new HuffmanCode(this.huffTables, bitStringData.toString(), startSpectralSelection, endSpectralSelection);
+		HuffmanCode hc = new HuffmanCode(this.sofMarker, this.huffTables, bitStringData.toString(), startSpectralSelection, endSpectralSelection);
 		hc.decode();
 		return hc;
 	} 
@@ -212,7 +222,7 @@ public class FileParser {
 		List m = hc.getDecodedData();
 		for(int k = 0; k < m.size(); k++)
 		{
-			System.out.println("MAtrix:");
+			System.out.println("Matrix:");
 			int[][] matrix = ((DCTMatrix) m.get(k)).getMatrix();
 			for (int i = 0; i < matrix.length; i++)
 			{

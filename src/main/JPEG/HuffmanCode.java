@@ -7,6 +7,7 @@ import main.Util.BitConverter;
 
 public class HuffmanCode {
 	
+	private StartOfFrameMarker sofMarker;
 	private HuffmanTable huffmanTable;
 	private String data;
 	private List<DCTMatrix> decodedData;
@@ -15,8 +16,9 @@ public class HuffmanCode {
 	private int height;//not used
 	private int width;//not used
 
-	public HuffmanCode(HuffmanTable huffmanTable, String encodedData, int startspectralselection, int endspectralselection /*, int width, int height*/)
+	public HuffmanCode(StartOfFrameMarker sofMarker, HuffmanTable huffmanTable, String encodedData, int startspectralselection, int endspectralselection /*, int width, int height*/)
 	{
+		this.sofMarker = sofMarker;
 		this.huffmanTable = huffmanTable;
 		this.data = encodedData;
 		this.startSpectralSelection = startspectralselection;
@@ -46,23 +48,39 @@ public class HuffmanCode {
 		boolean done = false;
 		while (!done)
 		{
-			DCTMatrix luminanceMatrix = new DCTMatrix(true, matrixwidth, matrixheight);
-			int dcvalue = this.decodeDC(this.huffmanTable.LuminanceDC);
-			luminanceMatrix.setDC(dcvalue);
-			this.decodeAC(this.huffmanTable.LuminanceAC, luminanceMatrix);
-			this.decodedData.add(luminanceMatrix);
-			
-			DCTMatrix chrominanceMatrixCb = new DCTMatrix(false, matrixwidth ,matrixheight);
-			dcvalue = this.decodeDC(this.huffmanTable.ChrominanceDC);
-			chrominanceMatrixCb.setDC(dcvalue);
-			this.decodeAC(this.huffmanTable.ChrominanceAC, chrominanceMatrixCb);
-			this.decodedData.add(chrominanceMatrixCb);
-			
-			DCTMatrix chrominanceMatrixCr = new DCTMatrix(false, matrixwidth, matrixheight);
-			dcvalue = this.decodeDC(this.huffmanTable.ChrominanceDC);
-			chrominanceMatrixCr.setDC(dcvalue);
-			this.decodeAC(this.huffmanTable.ChrominanceAC, chrominanceMatrixCr);
-			this.decodedData.add(chrominanceMatrixCr);
+			for (int i = 0; i < this.sofMarker.getNumberOfComponents(); i++)
+			{
+				for (int horizontal = 0; horizontal < this.sofMarker.getHorizontalFactors()[i]; horizontal++)
+				{
+					for (int vertical = 0; vertical < this.sofMarker.getVerticalFactors()[i]; vertical++)
+					{
+						if (i == 0)
+						{
+							DCTMatrix luminanceMatrix = new DCTMatrix(true, matrixwidth, matrixheight);
+							int dcvalue = this.decodeDC(this.huffmanTable.LuminanceDC);
+							luminanceMatrix.setDC(dcvalue);
+							this.decodeAC(this.huffmanTable.LuminanceAC, luminanceMatrix);
+							this.decodedData.add(luminanceMatrix);
+						}
+						else if (i == 1)
+						{
+							DCTMatrix chrominanceMatrixCb = new DCTMatrix(false, matrixwidth ,matrixheight);
+							int dcvalue = this.decodeDC(this.huffmanTable.ChrominanceDC);
+							chrominanceMatrixCb.setDC(dcvalue);
+							this.decodeAC(this.huffmanTable.ChrominanceAC, chrominanceMatrixCb);
+							this.decodedData.add(chrominanceMatrixCb);
+						}
+						else if(i == 2)
+						{
+							DCTMatrix chrominanceMatrixCr = new DCTMatrix(false, matrixwidth, matrixheight);
+							int dcvalue = this.decodeDC(this.huffmanTable.ChrominanceDC);
+							chrominanceMatrixCr.setDC(dcvalue);
+							this.decodeAC(this.huffmanTable.ChrominanceAC, chrominanceMatrixCr);
+							this.decodedData.add(chrominanceMatrixCr);
+						}
+					}
+				}
+			}
 			
 			hsum += matrixheight;
 			wsum += matrixwidth;

@@ -1,18 +1,0 @@
-
-Lsquid:S1068")Remove this unused "width" private field.(•õ¦òùÿÿÿÿ8íà¡ùı+
-}squid:S1488U"_Immediately return this expression instead of assigning it to the temporary variable "dcvalue".(ˆÁúê8ˆù¨øı+
-Hsquid:S1068"*Remove this unused "height" private field.(ÅœÔ˜8íà¡ùı+
-Isquid:S1068"&Remove this unused "ss" private field.(ëæŞªùÿÿÿÿ8ÎÏ–ğı+
-Lsquid:S1481,")Remove this unused "wsum" local variable.(­ş©³ûÿÿÿÿ8×ï£•ş+
-^squid:UnusedPrivateMethod["-Remove this unused private "decodeAC" method.(ÿ­öúÿÿÿÿ8ïëèîı+
-isquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(•Âœî8•È§•ş+
-Lsquid:S1481+")Remove this unused "hsum" local variable.(¨ûîÜûÿÿÿÿ8×ï£•ş+
-Ysquid:UnusedPrivateMethodK"-Remove this unused private "decodeDC" method.(ÉéıÂ8ïëèîı+
-osquid:S00120"WRename this package name to match the regular expression '^[a-z]+(\.[a-z][a-z0-9]*)*$'.(ößšœ
-Y
-squid:S106‘";Replace this usage of System.out or System.err by a logger.(úŞøø8õ¶ğ•ş+
-Vsquid:S1135•"2Complete the task associated to this TODO comment.(ÕÌ®şÿÿÿÿ8õ¶ğ•ş+
-Jsquid:S1481“"&Remove this unused "k" local variable.(Ã£¾‡ûÿÿÿÿ8õ¶ğ•ş+
-Dsquid:S1166”"%Either log or rethrow this exception.(ï­£Ä8õ¶ğ•ş+
-Ysquid:S1854“"5Remove this useless assignment to local variable "k".(Ã£¾‡ûÿÿÿÿ8õ¶ğ•ş+
-Gsquid:S1148–"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8õ¶ğ•ş+

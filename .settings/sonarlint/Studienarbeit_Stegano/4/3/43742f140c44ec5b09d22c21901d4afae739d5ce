@@ -1,0 +1,23 @@
+
+… squid:ForLoopCounterChangedCheckÉ"XRefactor the code in order to not assign to this loop counter from within the loop body.(Ì‚ˆÌ
+zsquid:S20930"^Change this "try" to a try-with-resources. (sonar.java.source not set. Assuming 7 or greater.)(ç£êúÿÿÿÿ
+d
+squid:S134?"NRefactor this code to not nest more than 3 if/for/while/switch/try statements.(×÷ß’
+d
+squid:S134K"NRefactor this code to not nest more than 3 if/for/while/switch/try statements.(×÷ß’
+R
+squid:S106×";Replace this usage of System.out or System.err by a logger.(ÆâÙ
+W
+squid:S106İ";Replace this usage of System.out or System.err by a logger.(úº‘üÿÿÿÿ
+W
+squid:S106ß";Replace this usage of System.out or System.err by a logger.(ŞÒ—üÿÿÿÿ
+„"squid:ClassVariableVisibilityCheck"VMake huffTables a static final constant or non-public and provide accessors if needed.(øÿ™ó
+Bsquid:S1481«"*Remove this unused "first" local variable.(ß«ˆĞ
+Hsquid:S1481¬"+Remove this unused "second" local variable.(ºŸœüÿÿÿÿ
+Ssquid:S1481º";Remove this unused "successivApproximation" local variable.(® ò±
+Wsquid:S1854¬":Remove this useless assignment to local variable "second".(ºŸœüÿÿÿÿ
+Qsquid:S1854«"9Remove this useless assignment to local variable "first".(ß«ˆĞ
+bsquid:S1854º"JRemove this useless assignment to local variable "successivApproximation".(® ò±
+osquid:S00120"WRename this package name to match the regular expression '^[a-z]+(\.[a-z][a-z0-9]*)*$'.(ªˆåÔ
+Tsquid:UselessImportCheck"0Remove this unused import 'java.nio.file.Files'.(‚ƒü
+Msquid:UselessImportCheck")Remove this unused import 'java.io.File'.(†Ğ¥Å
