@@ -1,7 +1,10 @@
 
-Vsquid:S1118":Add a private constructor to hide the implicit public one.(øğ’úÿÿÿÿ
-_squid:S1226"CIntroduce a new variable instead of reusing the parameter "number".(Ïùùüùÿÿÿÿ
 osquid:S00120"WRename this package name to match the regular expression '^[a-z]+(\.[a-z][a-z0-9]*)*$'.(á”Æ›
-3squid:S1643"Use a StringBuilder instead.(®Ñ¤İ
-3squid:S1643"Use a StringBuilder instead.(ø¡İø
-]squid:S1226"FIntroduce a new variable instead of reusing the parameter "bitString".(®Ñ¤İ
+3squid:S1643"Use a StringBuilder instead.(ø¡İø
+?squid:S16439"Use a StringBuilder instead.(¿·¦‚üÿÿÿÿ8µ‡ùÜ‚,
+_squid:S1226"CIntroduce a new variable instead of reusing the parameter "number".(Ïùùüùÿÿÿÿ
+Vsquid:S1118":Add a private constructor to hide the implicit public one.(øğ’úÿÿÿÿ
+dsquid:S1226F"AIntroduce a new variable instead of reusing the parameter "bits".(ùÙ¬Œùÿÿÿÿ8ü“ïŞ‚,
+3squid:S1643!"Use a StringBuilder instead.(®Ñ¤İ
+]squid:S1226!"FIntroduce a new variable instead of reusing the parameter "bitString".(®Ñ¤İ
+?squid:S16435"Use a StringBuilder instead.(÷¢µøÿÿÿÿ8µ‡ùÜ‚,

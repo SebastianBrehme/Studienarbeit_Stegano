@@ -11,6 +11,8 @@ public class HuffmanCode {
 	private HuffmanTable huffmanTable;
 	private String data;
 	private List<DCTMatrix> decodedData;
+	private DCTMatrix[] decodedData_array;
+	private List<Integer> encodedData;
 	private int startSpectralSelection; //not used
 	private int endSpectralSelection; //not used
 	private int height;//not used
@@ -29,9 +31,14 @@ public class HuffmanCode {
 		this.decodedData = new ArrayList<>();
 	}
 	
-	public List getDecodedData()
+	public DCTMatrix[] getDecodedData()
 	{
-		return this.decodedData;
+		return this.decodedData_array;
+	}
+	
+	public List getEncodedData()
+	{
+		return this.encodedData;
 	}
 	
 	private void reduceData(int beginIndex, int endIndex)
@@ -56,7 +63,7 @@ public class HuffmanCode {
 					{
 						if (i == 0)
 						{
-							DCTMatrix luminanceMatrix = new DCTMatrix(true, matrixwidth, matrixheight);
+							DCTMatrix luminanceMatrix = new DCTMatrix(Matrix.LUMINANCE, matrixwidth, matrixheight);
 							int dcvalue = this.decodeDC(this.huffmanTable.LuminanceDC);
 							luminanceMatrix.setDC(dcvalue);
 							this.decodeAC(this.huffmanTable.LuminanceAC, luminanceMatrix);
@@ -64,7 +71,7 @@ public class HuffmanCode {
 						}
 						else if (i == 1)
 						{
-							DCTMatrix chrominanceMatrixCb = new DCTMatrix(false, matrixwidth ,matrixheight);
+							DCTMatrix chrominanceMatrixCb = new DCTMatrix(Matrix.CB, matrixwidth ,matrixheight);
 							int dcvalue = this.decodeDC(this.huffmanTable.ChrominanceDC);
 							chrominanceMatrixCb.setDC(dcvalue);
 							this.decodeAC(this.huffmanTable.ChrominanceAC, chrominanceMatrixCb);
@@ -72,7 +79,7 @@ public class HuffmanCode {
 						}
 						else if(i == 2)
 						{
-							DCTMatrix chrominanceMatrixCr = new DCTMatrix(false, matrixwidth, matrixheight);
+							DCTMatrix chrominanceMatrixCr = new DCTMatrix(Matrix.CR, matrixwidth, matrixheight);
 							int dcvalue = this.decodeDC(this.huffmanTable.ChrominanceDC);
 							chrominanceMatrixCr.setDC(dcvalue);
 							this.decodeAC(this.huffmanTable.ChrominanceAC, chrominanceMatrixCr);
@@ -89,6 +96,9 @@ public class HuffmanCode {
 				done = true;
 			}
 		}
+		//this.decodedData_array = (DCTMatrix[]) this.decodedData.toArray();
+		this.decodedData_array = new DCTMatrix[this.decodedData.size()];
+		System.arraycopy(this.decodedData.toArray(), 0, this.decodedData_array, 0, this.decodedData.size());
 	}
 	//the method to call
 	private int decodeDC(String[][] table)
@@ -227,5 +237,151 @@ public class HuffmanCode {
 		}
 		return null;
 	}
+
+	
+	public void encode()
+	{
+		String encodedBinary = "";
+		for (int i = 0; i < this.decodedData_array.length; i++)
+		{
+			encodedBinary += encodeDCValue(i);
+			encodedBinary += encodeACValue(i);
+		}
+		int x = encodedBinary.length() % 8;
+		for (int i = 0; i < x; i++)
+		{
+			encodedBinary += "1";
+		}
+		this.encodedData = BitConverter.convertBitStringToIntegerList(encodedBinary);
+	}
+
+	private String encodeDCValue(int i) 
+	{
+		String encodedBits = "";
+		int dcValue = ((DCTMatrix)this.decodedData_array[i]).getValue(0);
+		if (dcValue == 0)
+		{
+			encodedBits = this.getEncodedBitsDependingOnMatrixType(true, i, dcValue);
+			return encodedBits;
+		}
+		
+		String encodedDC = this.getEncodedDCACValue(dcValue);
+		String bitsForLength = getEncodedBitsDependingOnMatrixType(true, i, encodedDC.length());
+		if (bitsForLength == null) { /*Error*/ } //TODO react when error occurs
+		else
+		{
+			encodedBits = bitsForLength + encodedDC;
+		}
+		return encodedBits;
+	}
+	
+	private String encodeACValue(int i)
+	{
+		String acString = "";
+		int zerorun = 0;
+		int zrlrun = 0;
+		for (int pos = 1; pos <= this.endSpectralSelection; pos++)
+		{
+			int acValue = ((DCTMatrix) this.decodedData_array[i]).getValue(pos);
+			if (acValue == 0)
+			{
+				if (zerorun == 16)
+				{
+					zrlrun++;
+					String zrl = getEncodedBitsDependingOnMatrixType(false, i, 0xF0);
+					if (zrl == null) {} //TODO react on error
+					else
+					{
+						acString += zrl;
+					}
+					zerorun = 0;
+				}
+				zerorun++;
+			}
+			else
+			{
+				String encodedAC = this.getEncodedDCACValue(acValue);
+				int v = zerorun * 16 + encodedAC.length();
+				String x = getEncodedBitsDependingOnMatrixType(false, i, v);
+				if (x == null) {} //TODO react on error
+				else
+				{
+					acString += x + encodedAC;
+				}
+				zerorun = 0;
+				zrlrun = 0;
+			}
+		}
+		String endOfBlock = getEncodedBitsDependingOnMatrixType(false, i, 0);
+		if (zrlrun > 0)
+		{
+			String zrlBits = getEncodedBitsDependingOnMatrixType(false, i, 0xF0);
+			while (acString.endsWith(zrlBits))
+			{
+				acString = acString.substring(0, acString.length()-zrlBits.length());
+			}
+			acString += endOfBlock;
+		}
+		else
+		{
+			if (zerorun > 0)
+			{
+				acString += endOfBlock;
+			}
+		}
+		return acString;
+	}
+	
+	private String getEncodedDCACValue(int value)
+	{
+		int positivValue = Math.abs(value); 
+		double log = Math.log10(positivValue) / Math.log10(2);
+		int length = (int) Math.ceil(log);
+		String bits = BitConverter.convertToBitString(positivValue, length);
+		if (value > 0) { return bits; }
+		else { return BitConverter.invertBitString(bits); }
+	}
+	
+	private String getEncodedBitsDependingOnMatrixType(boolean DC, int i, int value)
+	{
+		String x = null;
+		if (((DCTMatrix) this.decodedData_array[i]).getMatrixType() == Matrix.LUMINANCE)
+		{
+			if (DC)
+			{
+				x = getHuffmanEncodedBits(this.huffmanTable.LuminanceDC, value);
+			}
+			else
+			{
+				x = getHuffmanEncodedBits(this.huffmanTable.LuminanceAC, value);
+			}
+		}
+		else
+		{
+			if (DC)
+			{
+				x = getHuffmanEncodedBits(this.huffmanTable.ChrominanceDC, value);
+			}
+			else
+			{
+				x = getHuffmanEncodedBits(this.huffmanTable.ChrominanceAC, value);
+			}
+			
+		}
+		return x;
+	}
+	
+	private String getHuffmanEncodedBits(String[][] table, int value)
+	{
+		for (int i = 0; i < table.length; i++)
+		{
+			if (Integer.parseInt(table[i][1]) == value)
+			{
+				return table[i][0];
+			}
+		}
+		return null;
+	}
+
 }
 

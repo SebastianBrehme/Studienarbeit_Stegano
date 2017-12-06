@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import main.JPEG.DCTMatrix;
 import main.JPEG.HuffmanCode;
+import main.JPEG.Matrix;
 
 public class TestHuffmanCode {
 
@@ -104,7 +105,7 @@ public class TestHuffmanCode {
 		expect[0][1] = 5;
 		expect[3][3] = 13;
 		
-		DCTMatrix actual = new DCTMatrix(true, 8, 8);
+		DCTMatrix actual = new DCTMatrix(Matrix.LUMINANCE, 8, 8);
 		
 		actual = (DCTMatrix) method.invoke(huffmancode, table, actual);
 		assertArrayEquals(expect, actual.getMatrix());

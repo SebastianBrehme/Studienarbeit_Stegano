@@ -1,7 +1,7 @@
 package main.JPEG;
 
 public class DCTMatrix {
-	private boolean luminance; // not used!
+	private Matrix matrixType; // not used!
 
 	private int[][] matrix;
 	private int ACindex;
@@ -9,8 +9,8 @@ public class DCTMatrix {
 	private int width;
 	private int height;
 
-	public DCTMatrix(boolean lum, int width, int height) {
-		this.luminance = lum;
+	public DCTMatrix(Matrix matrixtype, int width, int height) {
+		this.matrixType = matrixtype;
 		this.width = width;
 		this.height = height;
 
@@ -20,6 +20,11 @@ public class DCTMatrix {
 
 	public int[][] getMatrix() {
 		return this.matrix;
+	}
+	
+	public Matrix getMatrixType()
+	{
+		return this.matrixType;
 	}
 
 	public void setDC(int value) {
@@ -47,53 +52,11 @@ public class DCTMatrix {
 		int matrixPos = zigzag[position];
 		matrix[matrixPos/8][matrixPos%8] = value;		
 	}
-
-	/*
-	 * not working!!
-	 */
-	@Deprecated
-	public void setAC(int value) {
-		// implement zig-zag
-		throw new UnsupportedOperationException("this method is not working!");
-//		int i = 0;
-//		int j = 1;
-//		int k = 0;
-//		boolean down = true;
-//		while (k < this.ACindex) 
-//		{
-//			k++;
-//			if (down) {
-//				if ((j - 1) >= 0) {
-//					j--;
-//					if ((i + 1) < this.matrix.length) {
-//						i++;
-//					} else {
-//						j += 2;
-//						down = false;
-//					}
-//				} else {
-//					if ((i + 1) < this.matrix.length) {
-//						i++;
-//					} else {
-//						j++;
-//					}
-//				}
-//			} else {
-//				if ((j + 1) < this.matrix[0].length) {
-//					if ((i - 1) >= 0) {
-//						i--;
-//					} else {
-//						down = true;
-//					}
-//				} else {
-//					if ((i + 1) < this.matrix.length) {
-//						i++;
-//						down = true;
-//					}
-//				}
-//			}
-//		}
-//		this.matrix[i][j] = value;
-//		this.ACindex++;
+	
+	public int getValue(int position)
+	{
+		int[] zigzag = {0, 1, 8, 16, 9,	2, 3, 10, 17, 24, 32, 25, 18, 11, 4, 5, 12, 19, 26, 33,	40,	48,	41, 34,	27,	20,	13, 6, 7, 14, 21, 28, 35, 42, 49, 56, 57, 50, 43, 36, 29, 22, 15, 23, 30, 37, 44, 51, 58, 59, 52, 45, 38, 31, 39, 46, 53, 60, 61, 54, 47, 55, 62, 63};
+		int matrixPos = zigzag[position];
+		return this.matrix[matrixPos/8][matrixPos%8];
 	}
 }

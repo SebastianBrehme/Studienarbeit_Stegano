@@ -5,19 +5,20 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import main.JPEG.DCTMatrix;
+import main.JPEG.Matrix;
 
 public class TestDCTMatrix {
 
 	@Test
 	public void testGetMatrix() {
-		DCTMatrix matrix = new DCTMatrix(true/*not used*/, 8, 8);
+		DCTMatrix matrix = new DCTMatrix(Matrix.LUMINANCE, 8, 8);
 		int[][] expect = new int[8][8];
 		assertArrayEquals(expect, matrix.getMatrix());
 	}
 
 	@Test
 	public void testSetDC() {
-		DCTMatrix matrix = new DCTMatrix(true/*not used*/, 8, 8);
+		DCTMatrix matrix = new DCTMatrix(Matrix.CB, 8, 8);
 		int[][] expect = new int[8][8];
 		
 		matrix.setDC(50);
@@ -33,7 +34,7 @@ public class TestDCTMatrix {
 
 	@Test//(timeout = 1000)
 	public void testSetAC() {
-		DCTMatrix matrix = new DCTMatrix(true/*not used*/, 8, 8);
+		DCTMatrix matrix = new DCTMatrix(Matrix.CR, 8, 8);
 		int[][] expect = new int[8][8];
 		
 		matrix.setAC(1,1);

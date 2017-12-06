@@ -2,6 +2,8 @@ package main.JPEG;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -18,7 +20,9 @@ public class FileParser {
 	}
 	private Status status;	
 	
-	private String filepath = "";	
+	private String filepath = "";
+	
+	private String outFilepath = "NewFile.jpg";
 	
 	private StartOfFrameMarker sofMarker;
 	
@@ -27,6 +31,8 @@ public class FileParser {
 	public HuffmanTable huffTables;
 	
 	private List<Integer> imageData;
+	
+	private FileOutputStream out = null;
 	
 	public FileParser()
 	{
@@ -37,6 +43,7 @@ public class FileParser {
 	public void setFilePath(String file)
 	{
 		this.filepath = file;
+		this.outFilepath = file.substring(0, file.lastIndexOf(".")) + "_new.jpg";
 	}
 	
 	public String getFilePath()
@@ -50,12 +57,13 @@ public class FileParser {
 		try
 		{
 			in = new FileInputStream(this.filepath);
+			out = new FileOutputStream(this.outFilepath);
 			int c;
 			
 			int huffTablesIndex = 0;
-			
 			while ((c = in.read()) != -1)
 			{
+				out.write(c);
 				if (c == 255)	//0xFF
 				{
 					this.status = Status.READFF;
@@ -110,6 +118,10 @@ public class FileParser {
 			{
 				in.close();
 			}
+			if (out != null)
+			{
+				out.flush();
+			}
 		}
 		
 		
@@ -121,6 +133,7 @@ public class FileParser {
 		int nextValue;
 		while ((nextValue = in.read()) != -1)
 		{
+			out.write(nextValue);
 			if (nextValue != 255)
 			{
 				x.add(nextValue);
@@ -146,6 +159,7 @@ public class FileParser {
 				int temp = in.read();
 				if (temp == 217)	//0xD9
 				{ 
+					this.status = Status.EOF;
 					return x;
 				}
 				else
@@ -219,11 +233,11 @@ public class FileParser {
 	
 	public void printMatrix(HuffmanCode hc)
 	{
-		List m = hc.getDecodedData();
-		for(int k = 0; k < m.size(); k++)
+		Object[] m = hc.getDecodedData();
+		for(int k = 0; k < m.length; k++)
 		{
 			System.out.println("Matrix:");
-			int[][] matrix = ((DCTMatrix) m.get(k)).getMatrix();
+			int[][] matrix = ((DCTMatrix) m[k]).getMatrix();
 			for (int i = 0; i < matrix.length; i++)
 			{
 				for (int j = 0; j < matrix[0].length; j++)
@@ -233,6 +247,47 @@ public class FileParser {
 				System.out.println("");
 			}
 		}
+	}
+	
+	public void writeFileBytes(HuffmanCode hc) throws IOException
+	{
+		String f = this.filepath.substring(0, this.filepath.lastIndexOf('.'));
+		
+		int index = 0;
+		//write SOS Header
+		out.write(this.imageData.get(index++));	//for size
+		out.write(this.imageData.get(index++));	//for size
+		
+		int numberofcomponents = this.imageData.get(index++);
+		out.write(numberofcomponents);
+		for (int i = 0; i < numberofcomponents; i++)
+		{
+			out.write(this.imageData.get(index++)); //component id
+			out.write(this.imageData.get(index++)); // DC/AC Table numbers
+		}
+		out.write(this.imageData.get(index++)); //start of spectral selection
+		out.write(this.imageData.get(index++)); //end of spectral selection
+		out.write(this.imageData.get(index++)); // two 4 bit fields
+		
+		//Write content of picture
+		for (int i = 0; i < hc.getEncodedData().size(); i++)
+		{
+			int value = (int)hc.getEncodedData().get(i); 
+			out.write(value);
+			
+			if (value == 255)
+			{
+				out.write(0x00);
+			}
+		}
+		//write end of SOS
+		out.write(0xFF);
+		out.write(0xD9);
+			
+		out.flush();
+		out.close();
+		
+		System.out.println("Write Done");
 	}
 }
 

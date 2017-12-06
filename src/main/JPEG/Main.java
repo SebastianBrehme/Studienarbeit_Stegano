@@ -23,6 +23,8 @@ public class Main {
 		HuffmanCode hc = x.processImageData();
 		x.printMatrix(hc);
 		System.out.println("Done!");
+		hc.encode();
+		x.writeFileBytes(hc);
 	}
 
 }

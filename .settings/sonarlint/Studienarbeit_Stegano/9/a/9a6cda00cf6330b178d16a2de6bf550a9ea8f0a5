@@ -1,8 +1,8 @@
 
-isquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(çÏªÈ8Í«­²‚,
-\squid:UselessImportCheck"3Remove this unused import 'main.Util.BitConverter'.(û‹·–øÿÿÿÿ
+osquid:S00120"WRename this package name to match the regular expression '^[a-z]+(\.[a-z][a-z0-9]*)*$'.(ªˆåÔ
+Qsquid:S1118":Add a private constructor to hide the implicit public one.(àªÅö
 ]
 squid:S106";Replace this usage of System.out or System.err by a logger.(ãÉ®îüÿÿÿÿ8²˜‹²‚,
-Qsquid:S1118":Add a private constructor to hide the implicit public one.(àªÅö
+\squid:UselessImportCheck"3Remove this unused import 'main.Util.BitConverter'.(û‹·–øÿÿÿÿ
 bsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(¦Â“´
-osquid:S00120"WRename this package name to match the regular expression '^[a-z]+(\.[a-z][a-z0-9]*)*$'.(ªˆåÔ
+nsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ñÜ©—ÿÿÿÿÿ8£Ï²Ù‚,

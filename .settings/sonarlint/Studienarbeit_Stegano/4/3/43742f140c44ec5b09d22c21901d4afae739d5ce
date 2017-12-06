@@ -1,26 +1,35 @@
 
-Ssquid:S1481Ä";Remove this unused "successivApproximation" local variable.(® ò±
-zsquid:S20932"^Change this "try" to a try-with-resources. (sonar.java.source not set. Assuming 7 or greater.)(ç£êúÿÿÿÿ
 i
-squid:S134I"NRefactor this code to not nest more than 3 if/for/while/switch/try statements.(ôå½øÿÿÿÿ
-i
-squid:S134A"NRefactor this code to not nest more than 3 if/for/while/switch/try statements.(ôå½øÿÿÿÿ
-bsquid:S1854Ä"JRemove this useless assignment to local variable "successivApproximation".(® ò±
-W
-squid:S106ç";Replace this usage of System.out or System.err by a logger.(úº‘üÿÿÿÿ
-p
-squid:S134U"NRefactor this code to not nest more than 3 if/for/while/switch/try statements.(ôå½øÿÿÿÿ8»öÓ°‚,
-Hsquid:S1481¶"+Remove this unused "second" local variable.(ºŸœüÿÿÿÿ
-R
-squid:S106á";Replace this usage of System.out or System.err by a logger.(Ø»”Æ
+squid:S134G"NRefactor this code to not nest more than 3 if/for/while/switch/try statements.(ôå½øÿÿÿÿ
 osquid:S00120"WRename this package name to match the regular expression '^[a-z]+(\.[a-z][a-z0-9]*)*$'.(ªˆåÔ
-… squid:ForLoopCounterChangedCheckÓ"XRefactor the code in order to not assign to this loop counter from within the loop body.(Ì‚ˆÌ
 W
-squid:S106é";Replace this usage of System.out or System.err by a logger.(ŞÒ—üÿÿÿÿ
-Wsquid:S1854¶":Remove this useless assignment to local variable "second".(ºŸœüÿÿÿÿ
-Tsquid:UselessImportCheck"0Remove this unused import 'java.nio.file.Files'.(‚ƒü
-Bsquid:S1481µ"*Remove this unused "first" local variable.(ß«ˆĞ
-Msquid:UselessImportCheck")Remove this unused import 'java.io.File'.(†Ğ¥Å
-– squid:MethodCyclomaticComplexity/"cThe Cyclomatic Complexity of this method "readFileBytes" is 11 which is greater than 10 authorized.(ë¤Ãø8»öÓ°‚,
-„"squid:ClassVariableVisibilityCheck"VMake huffTables a static final constant or non-public and provide accessors if needed.(øÿ™ó
-Qsquid:S1854µ"9Remove this useless assignment to local variable "first".(ß«ˆĞ
+squid:S106õ";Replace this usage of System.out or System.err by a logger.(ŞÒ—üÿÿÿÿ
+jsquid:UselessImportCheck":Remove this unused import 'java.io.FileNotFoundException'.(·î™ùÿÿÿÿ8§ì¬Ù‚,
+{squid:S2093€"^Change this "try" to a try-with-resources. (sonar.java.source not set. Assuming 7 or greater.)(ç£êúÿÿÿÿ
+„"squid:ClassVariableVisibilityCheck"VMake huffTables a static final constant or non-public and provide accessors if needed.(øÿ™ó
+Y
+squid:S106í";Replace this usage of System.out or System.err by a logger.(Ø»”Æ8ÃŠíß‚,
+^
+squid:S106Ÿ";Replace this usage of System.out or System.err by a logger.(Ç¯“Úûÿÿÿÿ8õö°Ù‚,
+Hsquid:S1481Â"+Remove this unused "second" local variable.(ºŸœüÿÿÿÿ
+csquid:HiddenFieldCheckÀ"9Rename "index" which hides the field declared at line 35.(ìüà·8ôóß‚,
+Y
+squid:S106ü";Replace this usage of System.out or System.err by a logger.(¾­½ã8ß¡¾ß‚,
+… squid:ForLoopCounterChangedCheckß"XRefactor the code in order to not assign to this loop counter from within the loop body.(Ì‚ˆÌ
+i
+squid:S134O"NRefactor this code to not nest more than 3 if/for/while/switch/try statements.(ôå½øÿÿÿÿ
+Ssquid:S1481Ğ";Remove this unused "successivApproximation" local variable.(® ò±
+Tsquid:UselessImportCheck"0Remove this unused import 'java.nio.file.Files'.(‚ƒü
+bsquid:S1854Ğ"JRemove this useless assignment to local variable "successivApproximation".(® ò±
+Wsquid:S1854Â":Remove this useless assignment to local variable "second".(ºŸœüÿÿÿÿ
+W
+squid:S106ó";Replace this usage of System.out or System.err by a logger.(úº‘üÿÿÿÿ
+e
+squid:S899ƒ"BDo something with the "boolean" value returned by "createNewFile".(Ğ’Íùÿÿÿÿ8…Ñ³ß‚,
+Qsquid:S1854Á"9Remove this useless assignment to local variable "first".(ß«ˆĞ
+Esquid:S1481ÿ"&Remove this unused "f" local variable.(úúşÓ8¹Èºß‚,
+p
+squid:S134["NRefactor this code to not nest more than 3 if/for/while/switch/try statements.(ôå½øÿÿÿÿ8»öÓ°‚,
+– squid:MethodCyclomaticComplexity5"cThe Cyclomatic Complexity of this method "readFileBytes" is 11 which is greater than 10 authorized.(ë¤Ãø8»öÓ°‚,
+Bsquid:S1481Á"*Remove this unused "first" local variable.(ß«ˆĞ
+squid:S20938"^Change this "try" to a try-with-resources. (sonar.java.source not set. Assuming 7 or greater.)(ç£êúÿÿÿÿ8§ì¬Ù‚,

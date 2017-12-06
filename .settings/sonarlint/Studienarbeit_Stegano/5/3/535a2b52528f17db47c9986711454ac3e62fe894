@@ -1,26 +1,42 @@
 
-@squid:S1068")Remove this unused "width" private field.(ëÊ¨Ê
-msquid:S00117y"VRename this local variable name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(±ê®f
-… squid:ForLoopCounterChangedCheck†"XRefactor the code in order to not assign to this loop counter from within the loop body.(å°ºú
-Rsquid:UnusedPrivateMethod^"-Remove this unused private "decodeDC" method.(ÉéıÂ
+Asquid:S1068"*Remove this unused "height" private field.(¥—²Ï
+… squid:ForLoopCounterChangedCheck¡"XRefactor the code in order to not assign to this loop counter from within the loop body.(å°ºú
+Qsquid:S1068":Remove this unused "startSpectralSelection" private field.(ú×´©
+nsquid:S1226‰"JIntroduce a new variable instead of reusing the parameter "encodedBinary".(¿Ûçøùÿÿÿÿ8¸şÅİ‚,
+Qsquid:S1135œ"2Complete the task associated to this TODO comment.(¹È¢ò8¸şÅİ‚,
+Esquid:S14816")Remove this unused "wsum" local variable.(­ş©³ûÿÿÿÿ
+Nsquid:S00108ª")Either remove or fill this block of code.(„êëúşÿÿÿÿ8¸şÅİ‚,
+@squid:S1643­"Use a StringBuilder instead.(š¿™÷ùÿÿÿÿ8Ô’éİ‚,
+osquid:CommentedOutCodeLineâ"<This block of commented-out lines of code should be removed.(–”ÃÕúÿÿÿÿ8€¾¯²‚,
+Ysquid:S1854Ó"5Remove this useless assignment to local variable "x".(òòøÿÿÿÿ8Ô’éİ‚,
 q
-squid:S134—"NRefactor this code to not nest more than 3 if/for/while/switch/try statements.(œ¸´ïûÿÿÿÿ8ªË€²‚,
-bsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(•Âœî
-{squid:S1488j"_Immediately return this expression instead of assigning it to the temporary variable "dcvalue".(¬àøœûÿÿÿÿ
-hsquid:CommentedOutCodeLineˆ"<This block of commented-out lines of code should be removed.(¸ÿã­úÿÿÿÿ
-j
-squid:S134„"NRefactor this code to not nest more than 3 if/for/while/switch/try statements.(ˆõÚ¶úÿÿÿÿ
-Wsquid:UnusedPrivateMethodu"-Remove this unused private "decodeAC" method.(Í„«úÿÿÿÿ
-Asquid:S1068"*Remove this unused "height" private field.(¥—²Ï
-… squid:ForLoopCounterChangedCheck™"XRefactor the code in order to not assign to this loop counter from within the loop body.(å°ºú
-Hsquid:S1135a"2Complete the task associated to this TODO comment.(­û0
-i
-squid:S1347"NRefactor this code to not nest more than 3 if/for/while/switch/try statements.(ß×Ë…üÿÿÿÿ
-Isquid:S1135z"2Complete the task associated to this TODO comment.(— ò
-Esquid:S1481.")Remove this unused "hsum" local variable.(¨ûîÜûÿÿÿÿ
-Esquid:S1481/")Remove this unused "wsum" local variable.(­ş©³ûÿÿÿÿ
-Qsquid:S1068":Remove this unused "startSpectralSelection" private field.(ú×´©
+squid:S134Œ"NRefactor this code to not nest more than 3 if/for/while/switch/try statements.(ˆõÚ¶úÿÿÿÿ8ªË€²‚,
+bsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(•Âœî
 osquid:S00120"WRename this package name to match the regular expression '^[a-z]+(\.[a-z][a-z0-9]*)*$'.(ªˆåÔ
-Š squid:ForLoopCounterChangedCheck‹"XRefactor the code in order to not assign to this loop counter from within the loop body.(‡ï¡©øÿÿÿÿ
-osquid:CommentedOutCodeLineÚ"<This block of commented-out lines of code should be removed.(–”ÃÕúÿÿÿÿ8€¾¯²‚,
-osquid:CommentedOutCodeLineİ"<This block of commented-out lines of code should be removed.(‘ëÜ—øÿÿÿÿ8€¾¯²‚,
+;squid:S1643û"Use a StringBuilder instead.(Á¼Üé8—õ‰ß‚,
+osquid:CommentedOutCodeLineå"<This block of commented-out lines of code should be removed.(‘ëÜ—øÿÿÿÿ8€¾¯²‚,
+fsquid:UnusedPrivateMethodß":Remove this unused private "getHuffmanEncodedBits" method.(ƒ³Ü48Š¨Ü‚,
+Isquid:S00108œ")Either remove or fill this block of code.(¹È¢ò8¸şÅİ‚,
+€squid:S00116"\Rename this field "decodedData_array" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(šÄ±Æúÿÿÿÿ8¼¦Û‚,
+nsquid:S00117"VRename this local variable name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(±ê®f
+Vsquid:S1135ƒ"2Complete the task associated to this TODO comment.(Öí»¬úÿÿÿÿ8·»…Ş‚,
+@squid:S1643Ÿ"Use a StringBuilder instead.(æî—–øÿÿÿÿ8Ô’éİ‚,
+Rsquid:UnusedPrivateMethodf"-Remove this unused private "decodeDC" method.(ÉéıÂ
+Esquid:S14815")Remove this unused "hsum" local variable.(¨ûîÜûÿÿÿÿ
+Hsquid:S1135i"2Complete the task associated to this TODO comment.(­û0
+… squid:ForLoopCounterChangedCheck"XRefactor the code in order to not assign to this loop counter from within the loop body.(å°ºú
+@squid:S1068")Remove this unused "width" private field.(ëÊ¨Ê
+Š squid:ForLoopCounterChangedCheck“"XRefactor the code in order to not assign to this loop counter from within the loop body.(‡ï¡©øÿÿÿÿ
+{squid:S1488r"_Immediately return this expression instead of assigning it to the temporary variable "dcvalue".(¬àøœûÿÿÿÿ
+Jsquid:S1135‚"2Complete the task associated to this TODO comment.(— ò
+i
+squid:S134>"NRefactor this code to not nest more than 3 if/for/while/switch/try statements.(ß×Ë…üÿÿÿÿ
+hsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(¸ÿã­úÿÿÿÿ
+j
+squid:S134Ÿ"NRefactor this code to not nest more than 3 if/for/while/switch/try statements.(œ¸´ïûÿÿÿÿ
+Qsquid:S1135†"2Complete the task associated to this TODO comment.(Âú÷ş8Éºˆİ‚,
+Vsquid:S1135ª"2Complete the task associated to this TODO comment.(„êëúşÿÿÿÿ8Ô’éİ‚,
+ysquid:S00122Í"TAt most one statement is allowed per line, but 2 statements were found on this line.(ğîØ¦üÿÿÿÿ8¦ÄüÜ‚,
+Wsquid:UnusedPrivateMethod}"-Remove this unused private "decodeAC" method.(Í„«úÿÿÿÿ
+l
+squid:S134œ"NRefactor this code to not nest more than 3 if/for/while/switch/try statements.(¹È¢ò8¸şÅİ‚,
