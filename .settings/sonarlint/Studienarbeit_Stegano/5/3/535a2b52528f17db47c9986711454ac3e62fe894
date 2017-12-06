@@ -1,0 +1,26 @@
+
+@squid:S1068")Remove this unused "width" private field.(ëÊ¨Ê
+msquid:S00117y"VRename this local variable name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(±ê®f
+… squid:ForLoopCounterChangedCheck†"XRefactor the code in order to not assign to this loop counter from within the loop body.(å°ºú
+Rsquid:UnusedPrivateMethod^"-Remove this unused private "decodeDC" method.(ÉéýÂ
+q
+squid:S134—"NRefactor this code to not nest more than 3 if/for/while/switch/try statements.(œ¸´ïûÿÿÿÿ8ªË€²‚,
+bsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(•Âœî
+{squid:S1488j"_Immediately return this expression instead of assigning it to the temporary variable "dcvalue".(¬àøœûÿÿÿÿ
+hsquid:CommentedOutCodeLineˆ"<This block of commented-out lines of code should be removed.(¸ÿã­úÿÿÿÿ
+j
+squid:S134„"NRefactor this code to not nest more than 3 if/for/while/switch/try statements.(ˆõÚ¶úÿÿÿÿ
+Wsquid:UnusedPrivateMethodu"-Remove this unused private "decodeAC" method.(Í„«úÿÿÿÿ
+Asquid:S1068"*Remove this unused "height" private field.(¥—²Ï
+… squid:ForLoopCounterChangedCheck™"XRefactor the code in order to not assign to this loop counter from within the loop body.(å°ºú
+Hsquid:S1135a"2Complete the task associated to this TODO comment.(Ž­û0
+i
+squid:S1347"NRefactor this code to not nest more than 3 if/for/while/switch/try statements.(ß×Ë…üÿÿÿÿ
+Isquid:S1135z"2Complete the task associated to this TODO comment.(— ò
+Esquid:S1481.")Remove this unused "hsum" local variable.(¨ûîÜûÿÿÿÿ
+Esquid:S1481/")Remove this unused "wsum" local variable.(­þ©³ûÿÿÿÿ
+Qsquid:S1068":Remove this unused "startSpectralSelection" private field.(ú×´©
+osquid:S00120"WRename this package name to match the regular expression '^[a-z]+(\.[a-z][a-z0-9]*)*$'.(ªˆåÔ
+Š squid:ForLoopCounterChangedCheck‹"XRefactor the code in order to not assign to this loop counter from within the loop body.(‡ï¡©øÿÿÿÿ
+osquid:CommentedOutCodeLineÚ"<This block of commented-out lines of code should be removed.(–”ÃÕúÿÿÿÿ8€¾¯²‚,
+osquid:CommentedOutCodeLineÝ"<This block of commented-out lines of code should be removed.(‘ëÜ—øÿÿÿÿ8€¾¯²‚,

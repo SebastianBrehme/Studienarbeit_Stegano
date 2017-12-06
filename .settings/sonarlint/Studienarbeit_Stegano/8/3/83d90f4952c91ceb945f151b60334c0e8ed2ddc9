@@ -1,0 +1,12 @@
+
+zsquid:S00116"[Rename this field "CbVerticalFactor" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‘ÈÍ°8ÄßÊ±‚,
+Nsquid:S1481'"+Remove this unused "length" local variable.(ÚïÈãûÿÿÿÿ8ÄßÊ±‚,
+€squid:S00116"\Rename this field "YHorizontalFactor" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ë±‘ùıÿÿÿÿ8ÄßÊ±‚,
+osquid:S00120"WRename this package name to match the regular expression '^[a-z]+(\.[a-z][a-z0-9]*)*$'.(ªˆåÔ
+squid:S00116"[Rename this field "CrVerticalFactor" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(àøïüÿÿÿÿ8ÄßÊ±‚,
+~squid:S00116"ZRename this field "VerticalFactors" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(î¶Ø½øÿÿÿÿ8Ö³î±‚,
+€squid:S00116"\Rename this field "HorizontalFactors" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¿º½µıÿÿÿÿ8Ö³î±‚,
+~squid:S00116"ZRename this field "YVerticalFactor" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³±È…ùÿÿÿÿ8ÄßÊ±‚,
+squid:S00116"]Rename this field "CbHorizontalFactor" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÁÉ«­üÿÿÿÿ8ÄßÊ±‚,
+|squid:S00116"]Rename this field "CrHorizontalFactor" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(’Ò…½8ÄßÊ±‚,
+]squid:S1854'":Remove this useless assignment to local variable "length".(ÚïÈãûÿÿÿÿ8ÄßÊ±‚,

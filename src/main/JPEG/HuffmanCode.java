@@ -215,10 +215,10 @@ public class HuffmanCode {
 	//returns the next huffman encoded value in the data stream
 	private String getNextHuffmanDecodedValue(String[][] table)
 	{
-		System.out.println("Data: " + this.data);
+		//System.out.println("Data: " + this.data);
 		for (int i = 0; i < table.length; i++)
 		{
-			System.out.println("Trying: "+table[i][0]);
+			//System.out.println("Trying: "+table[i][0]);
 			if (this.data.startsWith(table[i][0]))
 			{
 				this.reduceData(table[i][0].length(), this.data.length());

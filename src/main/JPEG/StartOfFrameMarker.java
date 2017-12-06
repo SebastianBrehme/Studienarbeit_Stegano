@@ -72,6 +72,7 @@ public class StartOfFrameMarker {
 				this.CrHorizontalFactor = BitConverter.getHigherBits(factors);
 				this.CrVerticalFactor = BitConverter.getLowerBits(factors);
 			}
+			index++;
 		}
 	}
 

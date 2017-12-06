@@ -1,15 +1,11 @@
 
-Dsquid:S1068"-Remove this unused "luminance" private field.(­ë•ó
-Esquid:S1068
-")Remove this unused "width" private field.(•õ¦òùÿÿÿÿ
-Asquid:S1068"*Remove this unused "height" private field.(ÅœÔ˜
-d
-squid:S134/"NRefactor this code to not nest more than 3 if/for/while/switch/try statements.(Õ» ë
-d
-squid:S134;"NRefactor this code to not nest more than 3 if/for/while/switch/try statements.(Õ» ë
-i
-squid:S134I"NRefactor this code to not nest more than 3 if/for/while/switch/try statements.(¶¹ıüÿÿÿÿ
-d
-squid:S134T"NRefactor this code to not nest more than 3 if/for/while/switch/try statements.(Õ» ë
-osquid:S00116"RRename this field "ACindex" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(åŞªÿÿÿÿÿ
+Asquid:S1068
+"*Remove this unused "height" private field.(ÅœÔ˜
+Esquid:S1068	")Remove this unused "width" private field.(•õ¦òùÿÿÿÿ
+Ssquid:S11337"5Do not forget to remove this deprecated code someday.(à¬Üò8¹–°‚,
+Ksquid:S1068"-Remove this unused "luminance" private field.(Ã»¦8¹–°‚,
+Nsquid:S1068"+Remove this unused "ACindex" private field.(åŞªÿÿÿÿÿ8¹–°‚,
+isquid:CommentedOutCodeLine:"<This block of commented-out lines of code should be removed.(§«Ï‹8¹–°‚,
+osquid:S00116"RRename this field "ACindex" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(åŞªÿÿÿÿÿ
+Wsquid:MissingDeprecatedCheck7"(Add the missing @deprecated Javadoc tag.(à¬Üò8¹–°‚,
 osquid:S00120"WRename this package name to match the regular expression '^[a-z]+(\.[a-z][a-z0-9]*)*$'.(ªˆåÔ
