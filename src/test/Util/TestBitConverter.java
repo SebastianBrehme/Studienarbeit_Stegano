@@ -2,6 +2,9 @@ package test.Util;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 
 import main.Util.BitConverter;
@@ -49,6 +52,27 @@ public class TestBitConverter {
 		assertEquals(14, BitConverter.getHigherBits(0xE7));
 		assertEquals(8, BitConverter.getHigherBits(0x8B));
 		assertEquals(7, BitConverter.getHigherBits(0x7F));
+	}
+	
+	@Test
+	public void testinvertBitString() {
+		assertEquals("1", BitConverter.invertBitString("0"));
+		assertEquals("0", BitConverter.invertBitString("1"));
+		assertEquals("101011", BitConverter.invertBitString("010100"));
+		assertEquals("00110101", BitConverter.invertBitString("11001010"));
+		assertEquals("100010100111", BitConverter.invertBitString("011101011000"));
+		assertEquals("00110110", BitConverter.invertBitString("11001001"));
+	}
+	
+	@Test
+	public void testconvertBitStringToIntegerList() {
+		List<Integer> values = new ArrayList<>();
+		values.add(255);
+		values.add(20);
+		assertEquals(values, BitConverter.convertBitStringToIntegerList("1111111100010100"));
+		values.add(179);
+		values.add(42);
+		assertEquals(values, BitConverter.convertBitStringToIntegerList("11111111000101001011001100101010"));
 	}
 
 }
