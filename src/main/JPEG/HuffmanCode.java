@@ -104,7 +104,9 @@ public class HuffmanCode {
 	private int decodeDC(String[][] table)
 	{
 		String c = this.getNextHuffmanDecodedValue(table);
-		if (c == null) { /*error*/ } //TODO react when error occurs
+		if (c == null) {
+			throw new RuntimeException("decodeDC: c is null!");
+		} //TODO react when error occurs
 		else 
 		{
 			int code = Integer.parseInt(c);
@@ -121,7 +123,7 @@ public class HuffmanCode {
 				return 0;
 			}
 		} 
-		return 0;
+		//return 0;
 	}
 	
 	private DCTMatrix decodeAC(String[][] table, DCTMatrix matrix)
@@ -129,7 +131,7 @@ public class HuffmanCode {
 		for (int position = 1; position <= this.endSpectralSelection; position++)
 		{
 			String code_s = this.getNextHuffmanDecodedValue(table);
-			if (code_s == null) { /*error*/ } //TODO react when error occurs
+			if (code_s == null) { throw new RuntimeException("decodeAC: code_s is null!"); } //TODO react when error occurs
 			else 
 			{
 				int code = Integer.parseInt(code_s);
@@ -248,7 +250,7 @@ public class HuffmanCode {
 			encodedBinary += encodeACValue(i);
 		}
 		int x = encodedBinary.length() % 8;
-		for (int i = 0; i < x; i++)
+		for (int i = 0; i < 8-x; i++)
 		{
 			encodedBinary += "1";
 		}
@@ -267,7 +269,10 @@ public class HuffmanCode {
 		
 		String encodedDC = this.getEncodedDCACValue(dcValue);
 		String bitsForLength = getEncodedBitsDependingOnMatrixType(true, i, encodedDC.length());
-		if (bitsForLength == null) { /*Error*/ } //TODO react when error occurs
+		if (bitsForLength == null) { 
+			System.err.println("encodeDCValue: bitsForLength is null!");
+			throw new RuntimeException("encodeDCValue: bitsForLength is null!");
+			} //TODO react when error occurs
 		else
 		{
 			encodedBits = bitsForLength + encodedDC;
@@ -285,25 +290,31 @@ public class HuffmanCode {
 			int acValue = ((DCTMatrix) this.decodedData_array[i]).getValue(pos);
 			if (acValue == 0)
 			{
+				zerorun++;
 				if (zerorun == 16)
 				{
 					zrlrun++;
 					String zrl = getEncodedBitsDependingOnMatrixType(false, i, 0xF0);
-					if (zrl == null) {} //TODO react on error
+					if (zrl == null) {
+						System.out.println("encodeACValue: zrl is null!");
+						throw new RuntimeException("encodeACValue: zrl is null!");} //TODO react on error
 					else
 					{
 						acString += zrl;
 					}
 					zerorun = 0;
 				}
-				zerorun++;
+				
 			}
 			else
 			{
 				String encodedAC = this.getEncodedDCACValue(acValue);
 				int v = zerorun * 16 + encodedAC.length();
 				String x = getEncodedBitsDependingOnMatrixType(false, i, v);
-				if (x == null) {} //TODO react on error
+				if (x == null) {
+					System.out.println("encodeACValue: x is null!"); 
+					throw new RuntimeException("encodeACValue: x is null!");
+				} //TODO react on error
 				else
 				{
 					acString += x + encodedAC;
