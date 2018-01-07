@@ -4,21 +4,23 @@ import static org.junit.Assert.*;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 
 import org.junit.Test;
 
 import main.JPEG.DCTMatrix;
-import main.JPEG.HuffmanCode;
+import main.JPEG.HuffmanDecode;
+import main.JPEG.ImageData;
 import main.JPEG.Matrix;
 
-public class TestHuffmanCode {
+public class TestHuffmanDecode {
 
 	@Test
 	public void testGetDecodedDCACValue() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException,
 			NoSuchMethodException, SecurityException {
-		Method method = HuffmanCode.class.getDeclaredMethod("getDecodedDCACValue", String.class, int.class);
+		Method method = HuffmanDecode.class.getDeclaredMethod("getDecodedDCACValue", String.class, int.class);
 		method.setAccessible(true);
-		HuffmanCode huffmancode = new HuffmanCode(null, null, "", 0, 63);
+		HuffmanDecode huffmancode = new HuffmanDecode();
 
 		assertEquals(0, (int) (method.invoke(huffmancode, "", 0)));
 		assertEquals(-1, (int) (method.invoke(huffmancode, "0", 1)));
@@ -67,24 +69,25 @@ public class TestHuffmanCode {
 	
 	@Test
 	public void testGetNextHuffmanDecodedValue() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-		Method method  = HuffmanCode.class.getDeclaredMethod("getNextHuffmanDecodedValue", String[][].class);
-		method.setAccessible(true);		
+		Method method  = HuffmanDecode.class.getDeclaredMethod("getNextHuffmanDecodedValue", String[][].class);
+		method.setAccessible(true);
 		
-		HuffmanCode huffmancode = new HuffmanCode(null, null, "00101111", 0, 63);
+		HuffmanDecode huffmancode = new HuffmanDecode();//null, null, null);
+		huffmancode.data = "00101111";
 		String[][] table = {{"00","0"},{"101","5"},{"111","18"}};
 		
 		assertEquals("0", (String)method.invoke(huffmancode, (Object)table));
 		assertEquals("5", (String)method.invoke(huffmancode, (Object)table));
 		assertEquals("18", (String)method.invoke(huffmancode,(Object) table));
-		assertEquals(null, method.invoke(huffmancode, (Object)table));
 	}
 	
 	@Test
 	public void testDecodeDC() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-		Method method  = HuffmanCode.class.getDeclaredMethod("decodeDC", String[][].class);
+		Method method  = HuffmanDecode.class.getDeclaredMethod("decodeDC", String[][].class);
 		method.setAccessible(true);		
 		
-		HuffmanCode huffmancode = new HuffmanCode(null, null, "00"+"101"+"1110"+"111"+"01111111111", 0, 63);
+		HuffmanDecode huffmancode = new HuffmanDecode();
+		huffmancode.data = "00"+"101"+"1110"+"111"+"01111111111";
 		String[][] table = {{"00","0"},{"101","4"},{"111","11"}};
 		
 		assertEquals(0, (int)method.invoke(huffmancode, (Object)table));
@@ -95,10 +98,10 @@ public class TestHuffmanCode {
 	
 	@Test
 	public void testDeocdeAC() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-		Method method  = HuffmanCode.class.getDeclaredMethod("decodeAC", String[][].class, DCTMatrix.class);
-		method.setAccessible(true);		
-		
-		HuffmanCode huffmancode = new HuffmanCode(null, null, "101"+"101"+"11110"+"1110"+"1101"+"00", 0, 63);
+		Method method  = HuffmanDecode.class.getDeclaredMethod("decodeAC", String[][].class, DCTMatrix.class);
+		method.setAccessible(true);
+		HuffmanDecode huffmancode = new HuffmanDecode();
+		huffmancode.data="101"+"101"+"11110"+"1110"+"1101"+"00";
 		String[][] table = {{"00","0"},{"101","3"},{"1110","100"},{"11110","240"}};
 		
 		int[][] expect = new int[8][8];
@@ -110,56 +113,4 @@ public class TestHuffmanCode {
 		actual = (DCTMatrix) method.invoke(huffmancode, table, actual);
 		assertArrayEquals(expect, actual.getMatrix());
 	}
-	
-	@Test
-	public void testGetEncodedDCACValue() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException,
-			NoSuchMethodException, SecurityException {
-		Method method = HuffmanCode.class.getDeclaredMethod("getEncodedDCACValue", int.class);
-		method.setAccessible(true);
-		HuffmanCode huffmancode = new HuffmanCode(null, null, "", 0, 63);
-
-		assertEquals("0", (method.invoke(huffmancode, -1)));
-		assertEquals("1", (method.invoke(huffmancode, 1)));
-		assertEquals("00", (method.invoke(huffmancode, -3)));
-		assertEquals("01", (method.invoke(huffmancode, -2)));
-		assertEquals("10", (method.invoke(huffmancode, 2)));
-		assertEquals("11", (method.invoke(huffmancode, 3)));
-		assertEquals("000", (method.invoke(huffmancode, -7)));
-		assertEquals("011", (method.invoke(huffmancode, -4)));
-		assertEquals("100", (method.invoke(huffmancode, 4)));
-		assertEquals("111", (method.invoke(huffmancode, 7)));
-		assertEquals("0000", (method.invoke(huffmancode, -15)));
-		assertEquals("0111", (method.invoke(huffmancode, -8)));
-		assertEquals("1000", (method.invoke(huffmancode, 8)));
-		assertEquals("1111", (method.invoke(huffmancode, 15)));
-		assertEquals("00000", (method.invoke(huffmancode, -31)));
-		assertEquals("01111", (method.invoke(huffmancode, -16)));
-		assertEquals("10000", (method.invoke(huffmancode, 16)));
-		assertEquals("11111", (method.invoke(huffmancode, 31)));
-		assertEquals("000000", (method.invoke(huffmancode, -63)));
-		assertEquals("011111", (method.invoke(huffmancode, -32)));
-		assertEquals("100000", (method.invoke(huffmancode, 32)));
-		assertEquals("111111", (method.invoke(huffmancode, 63)));
-		assertEquals("0000000", (method.invoke(huffmancode, -127)));
-		assertEquals("0111111", (method.invoke(huffmancode, -64)));
-		assertEquals("1000000", (method.invoke(huffmancode, 64)));
-		assertEquals("1111111", (method.invoke(huffmancode, 127)));
-		assertEquals("00000000", (method.invoke(huffmancode, -255)));
-		assertEquals("01111111", (method.invoke(huffmancode, -128)));
-		assertEquals("10000000", (method.invoke(huffmancode, 128)));
-		assertEquals("11111111", (method.invoke(huffmancode, 255)));
-		assertEquals("000000000", (method.invoke(huffmancode, -511)));
-		assertEquals("011111111", (method.invoke(huffmancode, -256)));
-		assertEquals("100000000", (method.invoke(huffmancode, 256)));
-		assertEquals("111111111", (method.invoke(huffmancode, 511)));
-		assertEquals("0000000000", (method.invoke(huffmancode, -1023)));
-		assertEquals("0111111111", (method.invoke(huffmancode, -512)));
-		assertEquals("1000000000", (method.invoke(huffmancode, 512)));
-		assertEquals("1111111111", (method.invoke(huffmancode, 1023)));
-		assertEquals("00000000000", (method.invoke(huffmancode, -2047)));
-		assertEquals("01111111111", (method.invoke(huffmancode, -1024)));
-		assertEquals("10000000000", (method.invoke(huffmancode, 1024)));
-		assertEquals("11111111111", (method.invoke(huffmancode, 2047)));
-	}
-
 }

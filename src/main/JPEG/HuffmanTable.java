@@ -1,11 +1,7 @@
 package main.JPEG;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import main.Util.BitConverter;
 
@@ -22,6 +18,8 @@ public class HuffmanTable {
 	int LuminanceDCIndex;
 	int ChrominanceACIndex;
 	int ChrominanceDCIndex;
+	
+	boolean tmp = true;
 	
 	public HuffmanTable(Object[] content)
 	{
@@ -62,10 +60,10 @@ public class HuffmanTable {
 				contentSingleTable.add((int)table[index++]);
 			}
 			
-			int fullTableLength = numberOfValues + 19; //19=2(Länge) + 1(Id, Class) + 16(Anzahlen)
+			int fullTableLength = numberOfValues + 19; //19=2(Lï¿½nge) + 1(Id, Class) + 16(Anzahlen)
 //			if (fullTableLength > 255)
 //			{
-//				contentSingleTable.add(0, fullTableLength / 256); //das sind die ersten zwei bytes für die länge
+//				contentSingleTable.add(0, fullTableLength / 256); //das sind die ersten zwei bytes fï¿½r die lï¿½nge
 //				contentSingleTable.add(1, fullTableLength % 256);
 //			}
 //			else
@@ -73,15 +71,18 @@ public class HuffmanTable {
 //				contentSingleTable.add(0, 0);
 //				contentSingleTable.add(1, fullTableLength);
 //			}
-			contentSingleTable.add(0, fullTableLength / 256); //das sind die ersten zwei bytes für die länge
+			contentSingleTable.add(0, fullTableLength / 256); //das sind die ersten zwei bytes fï¿½r die lï¿½nge
 			contentSingleTable.add(1, fullTableLength % 256);
 
 			initTable(contentSingleTable.toArray());
 		}
 	}
 	
+	
+
+	
 	private void initTable(Object[] table) //int[]
-	{
+	{	
 		//length 
 		int tableLength = (int)table[0] * (16*16) + (int)table[1]; //table.length should be the same; not used...
 		

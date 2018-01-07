@@ -59,4 +59,18 @@ public class DCTMatrix {
 		int matrixPos = zigzag[position];
 		return this.matrix[matrixPos/8][matrixPos%8];
 	}
+
+	@Override
+	public String toString() {
+		String result =this.matrixType.toString()+" "+this.ACindex+"\n";
+		for(int[] i : this.matrix) {
+			for(int j : i) {
+				result += j+" ";
+			}
+			result +="\n";
+		}
+		return result;
+	}
+	
+	
 }

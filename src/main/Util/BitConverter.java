@@ -29,6 +29,9 @@ public class BitConverter {
 	}
 	
 	private static String addUpToLenght(String bitString, int length) {
+		if(length == -1) {
+			return bitString;
+		}
 		while(bitString.length() < length) {
 			bitString = "0"+bitString;
 		}

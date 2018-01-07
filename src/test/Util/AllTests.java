@@ -5,10 +5,13 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 import test.JPEG.TestDCTMatrix;
-import test.JPEG.TestHuffmanCode;
+import test.JPEG.TestHuffmanDecode;
+import test.JPEG.TestHuffmanEncode;
+import test.JPEG.TestImageData;
 
 @RunWith(Suite.class)
-@SuiteClasses({ TestBitConverter.class, TestHuffmanCode.class, TestDCTMatrix.class })
+@SuiteClasses({ TestBitConverter.class, TestHuffmanDecode.class, TestDCTMatrix.class,
+	TestImageData.class, TestHuffmanEncode.class})
 public class AllTests {
 
 }
