@@ -31,19 +31,43 @@ public class HuffmanEncode {
 		int restart = 0xD0;
 		
 		for(listIndex = 0;listIndex<this.decodedData.size();listIndex++) {
-			String encodedBinary = "";
+			//String encodedBinary = "";
+			List<Byte> bitData = new ArrayList<Byte>();
 			for (int i = 0; i < this.decodedData.get(listIndex).size(); i++)
 			{
-				encodedBinary += encodeDCValue(i);
-				encodedBinary += encodeACValue(i);
+				//encodedBinary += encodeDCValue(i);
+				//encodedBinary += encodeACValue(i);
+				String dc = encodeDCValue(i);
+				for(int j=0;j<dc.length();j++) {
+					if(dc.charAt(j)=='0') {
+						bitData.add((byte)0);
+					}else {
+						bitData.add((byte)1);
+					}
+				}
+				
+				String ac = encodeACValue(i);
+				for(int j=0;j<ac.length();j++) {
+					if(ac.charAt(j)=='0') {
+						bitData.add((byte)0);
+					}else {
+						bitData.add((byte)1);
+					}
+				}
 			}
-			int x = encodedBinary.length() % 8;
+			//int x = encodedBinary.length() % 8;
+			int x = bitData.size() %8;
 			for (int i = 0; i < 8-x; i++)
 			{
-				encodedBinary += "1";
+				//encodedBinary += "1";
+				bitData.add((byte)1);
 			}
 			
-			List<Integer> temp = BitConverter.convertBitStringToIntegerList(encodedBinary);
+			List<Integer> temp = BitConverter.convertBitListToIntegerList(bitData);
+			
+			
+			//List<Integer> temp = BitConverter.convertBitStringToIntegerList(encodedBinary);
+			//System.out.println(temp.equals(temp2));
 			for(int i=0;i<temp.size()-1;i++) {
 				if(temp.get(i) == 0xFF) {
 					temp.add(i+1, 0x00);
