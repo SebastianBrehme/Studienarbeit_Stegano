@@ -60,6 +60,7 @@ public class FileParser {
 			while ((c = in.read()) != -1)
 			{
 				out.write(c);
+				
 				if (c == 255)	//0xFF
 				{
 					this.status = Status.READFF;
@@ -96,6 +97,11 @@ public class FileParser {
 				
 					}
 				}
+				else if(c>= 0xE0 && c<=0xEF) {
+					if(this.status == Status.READFF) {
+						skipAPPData(in);
+					}
+				}
 				else
 				{
 					this.status = Status.INITIAL;
@@ -121,6 +127,18 @@ public class FileParser {
 		}
 		
 		
+	}
+	
+	private void skipAPPData(FileInputStream in) throws IOException {
+		int firstLength = in.read();
+		int secondLength = in.read();
+		int totalLength = firstLength *256 + secondLength;
+		out.write(firstLength);
+		out.write(secondLength);
+		for(int i=0;i<totalLength-2;i++) {
+			int c = in.read();
+			out.write(c);
+		}
 	}
 	
 	private List<Integer> readNextSegment(FileInputStream in) throws IOException
