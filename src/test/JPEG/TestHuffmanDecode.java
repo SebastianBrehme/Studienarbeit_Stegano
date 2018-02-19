@@ -1,16 +1,19 @@
 package test.JPEG;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Test;
 
+import main.JPEG.BitData;
 import main.JPEG.DCTMatrix;
 import main.JPEG.HuffmanDecode;
-import main.JPEG.ImageData;
 import main.JPEG.Matrix;
 
 public class TestHuffmanDecode {
@@ -73,7 +76,8 @@ public class TestHuffmanDecode {
 		method.setAccessible(true);
 		
 		HuffmanDecode huffmancode = new HuffmanDecode();//null, null, null);
-		huffmancode.data = "00101111";
+		
+		huffmancode.m_data = this.createBitData(0x2F);//"00101111";
 		String[][] table = {{"00","0"},{"101","5"},{"111","18"}};
 		
 		assertEquals("0", (String)method.invoke(huffmancode, (Object)table));
@@ -86,8 +90,8 @@ public class TestHuffmanDecode {
 		Method method  = HuffmanDecode.class.getDeclaredMethod("decodeDC", String[][].class);
 		method.setAccessible(true);		
 		
-		HuffmanDecode huffmancode = new HuffmanDecode();
-		huffmancode.data = "00"+"101"+"1110"+"111"+"01111111111";
+		HuffmanDecode huffmancode = new HuffmanDecode();			
+		huffmancode.m_data = createBitData(0x2F,0x77,0xFF); //"00"+ "101"+"111"+"0111 0111 1111 111";
 		String[][] table = {{"00","0"},{"101","4"},{"111","11"}};
 		
 		assertEquals(0, (int)method.invoke(huffmancode, (Object)table));
@@ -101,7 +105,7 @@ public class TestHuffmanDecode {
 		Method method  = HuffmanDecode.class.getDeclaredMethod("decodeAC", String[][].class, DCTMatrix.class);
 		method.setAccessible(true);
 		HuffmanDecode huffmancode = new HuffmanDecode();
-		huffmancode.data="101"+"101"+"11110"+"1110"+"1101"+"00";
+		huffmancode.m_data=createBitData(0xB7,0xDD, 0xA0);//"101"+"101"+"11110"+"1110"+"1101"+"00";
 		String[][] table = {{"00","0"},{"101","3"},{"1110","100"},{"11110","240"}};
 		
 		int[][] expect = new int[8][8];
@@ -112,5 +116,13 @@ public class TestHuffmanDecode {
 		
 		actual = (DCTMatrix) method.invoke(huffmancode, table, actual);
 		assertArrayEquals(expect, actual.getMatrix());
+	}
+	
+	private BitData createBitData(Integer... data) {
+		List<Integer> one = new ArrayList<>(Arrays.asList(data));
+		List<List<Integer>> two = new ArrayList<List<Integer>>();
+		two.add(one);
+		BitData result = new BitData(two);
+		return result;
 	}
 }
