@@ -9,7 +9,6 @@ import main.Util.BitConverter;
 
 public class ImageData {
 	List<Integer> rawData;
-	//List<String> imageDataStrings;
 	int startSpectralSelection;
 	int endSpectralSelection;
 	int successivApproximation;
@@ -21,8 +20,6 @@ public class ImageData {
 	
 	public ImageData(List<Integer> rawData) {
 		this.rawData = rawData;
-		//this.imageDataStrings = new ArrayList<>();
-		Byte b;
 	}
 	
 	public void sortRawData() {
@@ -45,7 +42,6 @@ public class ImageData {
 		}
 		List<List<Integer>> temp = this.splitRestartMarker(rawInteger);
 		temp = this.substitudeFF00(temp);
-		//this.imageDataStrings = this.convertIntegerDataToBits(temp);
 		bitData = new BitData(temp);
 	}
 	

@@ -60,18 +60,8 @@ public class HuffmanTable {
 				contentSingleTable.add((int)table[index++]);
 			}
 			
-			int fullTableLength = numberOfValues + 19; //19=2(L�nge) + 1(Id, Class) + 16(Anzahlen)
-//			if (fullTableLength > 255)
-//			{
-//				contentSingleTable.add(0, fullTableLength / 256); //das sind die ersten zwei bytes f�r die l�nge
-//				contentSingleTable.add(1, fullTableLength % 256);
-//			}
-//			else
-//			{
-//				contentSingleTable.add(0, 0);
-//				contentSingleTable.add(1, fullTableLength);
-//			}
-			contentSingleTable.add(0, fullTableLength / 256); //das sind die ersten zwei bytes f�r die l�nge
+			int fullTableLength = numberOfValues + 19; //19=2(Laenge) + 1(Id, Class) + 16(Anzahlen)
+			contentSingleTable.add(0, fullTableLength / 256); //das sind die ersten zwei bytes fuer die laenge
 			contentSingleTable.add(1, fullTableLength % 256);
 
 			initTable(contentSingleTable.toArray());
@@ -81,7 +71,7 @@ public class HuffmanTable {
 	
 
 	
-	private void initTable(Object[] table) //int[]
+	private void initTable(Object[] table)
 	{	
 		//length 
 		int tableLength = (int)table[0] * (16*16) + (int)table[1]; //table.length should be the same; not used...
@@ -90,25 +80,7 @@ public class HuffmanTable {
 		int[] counts = new int[16];
 		for(int i=0;i<counts.length;i++) {
 			counts[i] = (int) table[i+3];
-		}
-		
-//		counts[0] = (int) table[3];//TODO for loop
-//		counts[1] = (int) table[4];
-//		counts[2] = (int) table[5];
-//		counts[3] = (int) table[6];
-//		counts[4] = (int) table[7];
-//		counts[5] = (int) table[8];
-//		counts[6] = (int) table[9];
-//		counts[7] = (int) table[10];
-//		counts[8] = (int) table[11];
-//		counts[9] = (int) table[12];
-//		counts[10] = (int) table[13];
-//		counts[11] = (int) table[14];
-//		counts[12] = (int) table[15];
-//		counts[13] = (int) table[16];
-//		counts[14] = (int) table[17];
-//		counts[15] = (int) table[18];
-		
+		}		
 		
 		//codes sorted by their length
 		int tableIndex = 19;

@@ -9,7 +9,6 @@ public class HuffmanDecode {
 	
 	private StartOfFrameMarker sofMarker;
 	public HuffmanTable huffmanTable;
-	//public String data;// - performance
 	public BitData m_data;
 	public ImageData imageData;
 	private List<List<DCTMatrix>> decodedData;
@@ -27,7 +26,6 @@ public class HuffmanDecode {
 		this.huffmanTable = huffmanTable;
 		this.imageData = imageData;
 		this.listIndex = 0;
-		//this.data = this.imageData.imageDataStrings.get(listIndex); - performance
 		this.m_data = this.imageData.bitData;
 		//this.startSpectralSelection = this.imageData.startSpectralSelection;
 		//this.endSpectralSelection = this.imageData.endSpectralSelection;
@@ -38,7 +36,6 @@ public class HuffmanDecode {
 	
 	public List<List<DCTMatrix>> getDecodedData()
 	{
-		//return this.decodedData_array;
 		return this.decodedData;
 	}
 	
@@ -50,11 +47,7 @@ public class HuffmanDecode {
 	private void reduceData(int beginIndex, int endIndex)
 	{
 		this.bitByteSep += beginIndex;
-		
-		//StringBuilder b = new StringBuilder(this.data);
-		//this.data = b.substring(beginIndex, endIndex);
 		this.m_data.reduce(beginIndex,endIndex);
-		//this.data = this.data.substring(beginIndex, endIndex);
 	}
 	
 	public void decode()
@@ -108,14 +101,11 @@ public class HuffmanDecode {
 			
 			hsum += matrixheight;
 			wsum += matrixwidth;
-			if (/*this.data.length() < 8*/this.m_data.lessThan8() && !this.m_data.hasNextList())// listIndex==this.imageData.imageDataStrings.size()-1)
+			if (this.m_data.lessThan8() && !this.m_data.hasNextList())
 			{
 				done = true;
 			}
 		}
-		//this.decodedData_array = (DCTMatrix[]) this.decodedData.toArray();
-		//this.decodedData_array = new DCTMatrix[this.decodedData.size()];
-		//System.arraycopy(this.decodedData.toArray(), 0, this.decodedData_array, 0, this.decodedData.size());
 	}
 		
 	//the method to call
@@ -128,8 +118,8 @@ public class HuffmanDecode {
 
 		int code = Integer.parseInt(c);
 		if (code > 0) {
-			String bits = this.m_data.cutPartAsString(0, code);//this.data.substring(0, code); - performance
-			this.reduceData(code, -1);// - performance this.data.length()); // remove the additional bits from the data stream
+			String bits = this.m_data.cutPartAsString(0, code);
+			this.reduceData(code, -1); // remove the additional bits from the data stream
 
 			int dcvalue = this.getDecodedDCACValue(bits, code); // the actual DC Value
 			return dcvalue;
@@ -167,8 +157,8 @@ public class HuffmanDecode {
 					int zeroRun = BitConverter.getHigherBits(code);
 					int magnitude = BitConverter.getLowerBits(code);					
 					
-					String bits = this.m_data.cutPartAsString(0, magnitude); // -performance this.data.substring(0, magnitude);
-					this.reduceData(magnitude, -1);// - performance this.data.length());
+					String bits = this.m_data.cutPartAsString(0, magnitude);
+					this.reduceData(magnitude, -1);
 					
 					int value = this.getDecodedDCACValue(bits, magnitude);					
 					
@@ -239,32 +229,24 @@ public class HuffmanDecode {
 	//returns the next huffman decoded value in the data stream
 	private String getNextHuffmanDecodedValue(String[][] table)
 	{
-		//System.out.println("Data: " + this.data);
 		for (int i = 0; i < table.length; i++)
 		{
-			//System.out.println("Trying: "+table[i][0]);
-			if (this.m_data.startsWithString(table[i][0])) //performance
+			if (this.m_data.startsWithString(table[i][0]))
 			{
-				this.reduceData(table[i][0].length(), -1);//-performance this.data.length());
+				this.reduceData(table[i][0].length(), -1);
 				return table[i][1];
 			}
 		}
 		
 		//restartmarker artifakt
-		//if(this.listIndex < this.imageData.imageDataStrings.size()-1) { - performance
 		if(this.m_data.hasNextList()) {
-			System.out.println("restart marker artifakt");
 			this.listIndex++;
-			//this.data = this.imageData.imageDataStrings.get(listIndex); - performance
 			this.m_data.nextList();
 			this.decodedData.add(new ArrayList<DCTMatrix>());
-			//int remove = 8-this.bitByteSep%8;
-			//this.reduceData(remove, this.data.length());
 			return getNextHuffmanDecodedValue(table);
 		}
 		
 		throw new RuntimeException();
-		//return null;
 	}	
 }
 

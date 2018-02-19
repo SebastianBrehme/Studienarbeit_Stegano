@@ -25,7 +25,6 @@ public class FileParser {
 	
 	public HuffmanTable huffTables;
 	
-	//private List<Integer> imageData;
 	private ImageData imageData;
 	
 	private FileOutputStream out = null;
@@ -204,53 +203,6 @@ public class FileParser {
 
 	public HuffmanDecode processImageData()
 	{
-//		int[] data = this.imageData.stream().mapToInt(i->i).toArray();
-//		int index = 0;
-//		int first = data[index++]; //should be 0x00 - for size
-//		int second = data[index++]; //should be 0x0C - for size
-//		
-//		int numberofcomponents = data[index++];
-//		int[][] components = new int[numberofcomponents][3];
-//		for (int i = 0; i < numberofcomponents; i++)
-//		{
-//			components[i][0] = data[index++];	//component id
-//			int temp = data[index++];
-//			components[i][1] = BitConverter.getHigherBits(temp); //DC Table Number
-//			components[i][2] = BitConverter.getLowerBits(temp);	//AC Table Number
-//		}
-//		//Only for progressiv mode, currently not used
-//		int startSpectralSelection = data[index++]; //start of spectral selection
-//		int endSpectralSelection = data[index++]; //end of spectral selection
-//		int successivApproximation = data[index++]; //two 4 bit fields
-//		
-//		
-//		StringBuilder bitStringData = new StringBuilder();
-//		for (int i = index; i < data.length; i++)
-//		{
-//			//parse to binary
-//			int value = data[index++];
-//			
-//			//skip restart marker
-//			if(value == 0xFF && (data[index]>= 0xD0 && data[index]<=0xD7))
-//			{
-//				index++;
-//				i++;
-//				continue;
-//			}
-//			
-//			
-//			bitStringData.append(BitConverter.convertToBitString(value));
-//			
-//			// skip "stuff bit"
-//			if (value == 255 && data[index] == 0)	//0xFF 0x00
-//			{
-//				index++; //sicher???
-//				i++;
-//			}
-//			
-//		}
-		
-		//HuffmanCode hc = new HuffmanCode(this.sofMarker, this.huffTables, bitStringData.toString(), startSpectralSelection, endSpectralSelection);
 		this.imageData.sortRawData();
 		HuffmanDecode hc = new HuffmanDecode(this.sofMarker, this.huffTables, this.imageData);
 		hc.decode();
@@ -292,11 +244,6 @@ public class FileParser {
 		{
 			int value = (int)hc.getEncodedData().get(i); 
 			out.write(value);
-			
-			//if (value == 255)
-			//{
-			//	out.write(0x00);
-			//}
 		}
 		//write end of SOS
 		out.write(0xFF);
