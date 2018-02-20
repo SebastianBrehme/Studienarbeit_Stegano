@@ -80,7 +80,7 @@ public class BitConverter {
 	public static List<Integer> convertBitListToIntegerList(List<Byte>bitData){
 		List<Integer> values = new ArrayList<>();
 		int index = 0;
-		while(index+8<bitData.size()) {
+		while(index+8<=bitData.size()) {
 			String temp = "";
 			for(int i=0;i<8;i++) {
 				if(bitData.get(index)==0) {
