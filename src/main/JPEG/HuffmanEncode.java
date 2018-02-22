@@ -54,7 +54,7 @@ public class HuffmanEncode {
 			}
 			
 			int x = bitData.size() %8;
-			for (int i = 0; i < 8-x; i++)
+			for (int i = 0; i < 8-x && x!=0; i++)
 			{
 				bitData.add((byte)1);
 			}

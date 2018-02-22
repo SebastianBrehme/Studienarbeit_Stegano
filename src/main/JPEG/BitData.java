@@ -23,7 +23,7 @@ public class BitData {
 	}
 	
 	public boolean lessThan8() {
-		return actIndex+8>bitData.get(actList).size();
+		return actIndex+8>=bitData.get(actList).size();
 	}
 	
 	public String cutPartAsString(int start, int end) {

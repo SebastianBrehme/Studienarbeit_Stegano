@@ -10,7 +10,7 @@ public class DCTJsteg implements DCTMatrixLSB {
 	@Override
 	public List<List<DCTMatrix>> hideMessage(List<List<DCTMatrix>> stack, HiddenMessage message) {
 		
-		message = HiddenMessage.addEOMByte(message);
+		message = HiddenMessage.addLengthInfor(message);
 		
 		int lineIndex = 0;
 		int matrixIndex = 0;
@@ -54,12 +54,16 @@ public class DCTJsteg implements DCTMatrixLSB {
 
 	@Override
 	public HiddenMessage recoverMessage(List<List<DCTMatrix>> stack) {
-		//int bytesRead = 0;
+		int bytesToRead = 0;
+		int bytesRed = 0;
 		List<Byte> data = new ArrayList<Byte>(); //test implementation
 		byte actuel = 0;
 		byte readActuelBits = 0;
 		
-		int lineIndex = 0;
+		byte[] header = {0,0,0,0,-1};
+		int headerIndex = 0;
+		
+		
 		int matrixIndex = 0;
 		
 		getIt: 
@@ -72,14 +76,30 @@ public class DCTJsteg implements DCTMatrixLSB {
 						actuel*=(byte)2;
 						actuel+=(byte)Math.abs(value%2);						
 						if(readActuelBits==8) {
-							//data[bytesRead] = actuel;
-							data.add(actuel);
-							if(actuel == 0) {
-								break getIt;
+							
+							//header
+							if(headerIndex < 5) {
+								header[headerIndex] = actuel;
+								headerIndex++;
+								actuel = 0;
+								readActuelBits = 0;
+								//header final
+								if(headerIndex == 5) {
+									bytesToRead = header[0]*256*256*256+header[1]*256*256+header[2]*256+header[3];
+									if(header[4]!=0) {
+										System.out.println("Error");
+										return new HiddenMessage();
+									}
+								}
+							}else {
+								data.add(actuel);
+								bytesRed++;
+								actuel = 0;
+								readActuelBits = 0;
+								if(bytesRed == bytesToRead) {
+									break getIt;
+								}
 							}
-							actuel = 0;
-							//bytesRead++;
-							readActuelBits =0;
 						}
 					}
 				}
