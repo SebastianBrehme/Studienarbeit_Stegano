@@ -251,8 +251,6 @@ public class FileParser {
 			
 		out.flush();
 		out.close();
-		
-		System.out.println("Write Done");
 	}
 }
 

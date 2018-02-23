@@ -47,7 +47,7 @@ public class TestBitData {
 		BitData b_data = new BitData(data);
 		assertFalse(b_data.lessThan8());
 		b_data.reduce(8, -1);
-		assertFalse(b_data.lessThan8());
+		assertTrue(b_data.lessThan8());
 		b_data.reduce(1, -1);
 		assertTrue(b_data.lessThan8());
 	}

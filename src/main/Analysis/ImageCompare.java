@@ -26,7 +26,7 @@ public class ImageCompare {
 		return input;
 	}
 	
-	public static long compareImages(String pathToOriginal, String pathToChanged, DiffImageMode mode, int exponent) throws IOException {
+	public static double compareImages(String pathToOriginal, String pathToChanged, DiffImageMode mode, int exponent) throws IOException {
 		return ImageCompare.compareImages(new File(pathToOriginal), new File(pathToChanged), mode, exponent);
 	}
 	
@@ -39,7 +39,7 @@ public class ImageCompare {
 	 * @return long - how equal are the Images on scale from 0 to 1
 	 * @throws IOException
 	 */
-	public static long compareImages(File originalFile, File changedFile, DiffImageMode mode, int exponent) throws IOException {
+	public static double compareImages(File originalFile, File changedFile, DiffImageMode mode, int exponent) throws IOException {
 		BufferedImage original = ImageCompare.loadImage(originalFile);
 		BufferedImage changed = ImageCompare.loadImage(changedFile);
 		
@@ -63,12 +63,12 @@ public class ImageCompare {
 		}
 		
 		if(mode != DiffImageMode.NoDiffImage) {
-			ImageIO.write(image, "png", new File("TestImage"+File.separator+"difference.png"));
+			ImageIO.write(image, "png", new File("TestImages"+File.separator+"difference.png"));
 		}
 		
-		long maximalValue = original.getWidth()*original.getHeight()*(3*255);
-		System.out.printf("Zu %f %s gleich", (1.0-(double)difference/(double)maximalValue)*100,"%");
-		return difference;
+		long maximalValue = original.getWidth()*original.getHeight()*(3*(long)Math.pow(255,exponent));
+		System.out.printf("Zu %f %s gleich\n", (1.0-(double)difference/(double)maximalValue)*100,"%");
+		return (1.0-(double)difference/(double)maximalValue);
 	}
 	
 	private static Color calculateColor(int reddiff, int greendiff, int bluediff, DiffImageMode mode) {
