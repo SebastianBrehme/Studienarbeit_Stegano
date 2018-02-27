@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import main.JPEG.DCTMatrix;
+import main.Util.DCTStream;
 
 public class DCTJsteg implements DCTMatrixLSB {
 
@@ -12,111 +13,92 @@ public class DCTJsteg implements DCTMatrixLSB {
 		
 		message = HiddenMessage.addLengthInfor(message);
 		
-		int lineIndex = 0;
-		int matrixIndex = 0;
+		DCTStream dctstream = new DCTStream(stack);
+		int position = 0;
+		int max = dctstream.size;
 		
 		while(message.hasNext()) {
-			
-			if(lineIndex < stack.size()) {
-				if(matrixIndex <stack.get(lineIndex).size()) {
-					DCTMatrix matrix = stack.get(lineIndex).get(matrixIndex);
-					
-					int valueIndex = 1;
-					while(message.hasNext() && valueIndex<64) {
-						int value = matrix.getValue(valueIndex);
-						if(value!=0 && value !=1) {
-							int m_bit = message.getNext();
-							if(value%2==0 && m_bit==1) {
-								value++;
-							}
-							if(Math.abs(value%2)==1 && m_bit==0) {
-								value--;
-							}
-						}
-						matrix.setAC(valueIndex, value);
-						valueIndex++;
-					}
-					matrixIndex++;
-					
-				}else {
-					lineIndex++;
-				}
-			}else{
-				System.out.println("no space!!");
-				return stack;
+			int value = dctstream.getValueAt(position);
+			while(value==0 || value==1 || position%64==0/*skip DC components*/) {
+				position++;
+				value = dctstream.getValueAt(position);
 			}
-		}	
+			
+			int bit = message.getNext();
+			if(bit==0 && Math.abs(value%2)==1) {
+				value--;
+			}else if(bit==1 && Math.abs(value%2)==0) {
+				value++;
+			}
+			
+			dctstream.setValueAt(position, value);
+			position++;
+		}
 		
-		return stack;
+		return dctstream.data;
 	}
 	
 	
 
 	@Override
 	public HiddenMessage recoverMessage(List<List<DCTMatrix>> stack) {
-		int bytesToRead = 0;
-		int bytesRed = 0;
-		List<Byte> data = new ArrayList<Byte>(); //test implementation
-		byte actuel = 0;
-		byte readActuelBits = 0;
 		
-		byte[] header = {0,0,0,0,-1};
+		DCTStream stream = new DCTStream(stack);
 		int headerIndex = 0;
+		byte[] header = {0,0,0,0,-1};
+		int messageLength = 0;
+		int bitsRead = 0;
+		int actual = 0;		
+		int position = 0;
 		
 		
-		int matrixIndex = 0;
-		
-		getIt: 
-		for(List<DCTMatrix> lines : stack) {
-			for(DCTMatrix matrix : lines) {
-				for(int i=1;i<64;i++) {
-					int value = matrix.getValue(i);
-					if(value!=0 && value != 1) {
-						readActuelBits++;
-						actuel*=(byte)2;
-						actuel+=(byte)Math.abs(value%2);						
-						if(readActuelBits==8) {
-							
-							//header
-							if(headerIndex < 5) {
-								header[headerIndex] = actuel;
-								headerIndex++;
-								actuel = 0;
-								readActuelBits = 0;
-								//header final
-								if(headerIndex == 5) {
-									bytesToRead = header[0]*256*256*256+header[1]*256*256+header[2]*256+header[3];
-									if(header[4]!=0) {
-										System.out.println("Error");
-										return new HiddenMessage();
-									}
-								}
-							}else {
-								data.add(actuel);
-								bytesRed++;
-								actuel = 0;
-								readActuelBits = 0;
-								if(bytesRed == bytesToRead) {
-									break getIt;
-								}
-							}
-						}
-					}
-				}
+		while(headerIndex<5) {
+			int value = stream.getValueAt(position);
+			while(value==0 || value==1 || position%64==0) {
+				position++;
+				value = stream.getValueAt(position);
 			}
+			
+			actual*=(byte)2;
+			actual+=(byte)Math.abs(value%2);
+			bitsRead++;
+			
+			if(bitsRead==8) {
+				header[headerIndex] = (byte)actual;
+				headerIndex++;
+				actual = 0;
+				bitsRead = 0;
+			}
+			
+			position++;
 		}
 		
-		System.out.println();
-		System.out.println(data);
-		System.out.println();
-		data.remove(data.size()-1);
-		Byte[] tmp = new Byte[data.size()];
-		tmp = (Byte[]) data.toArray(tmp);
-		byte[] dataArray = new byte[tmp.length];
-		for(int i=0;i<tmp.length;i++) {
-			dataArray[i] = tmp[i];
+		messageLength = header[0]*256*256*256+header[1]*256*256+header[2]*256+header[3];
+		byte[] data = new byte[messageLength];
+		int index = 0;
+		
+		while(index<messageLength) {
+			int value = stream.getValueAt(position);
+			while(value==0 || value==1 || position%64==0) {
+				position++;
+				value = stream.getValueAt(position);
+			}
+			
+			actual*=(byte)2;
+			actual+=(byte)Math.abs(value%2);
+			bitsRead++;
+			
+			if(bitsRead==8) {
+				data[index] = (byte)actual;
+				index++;
+				actual = 0;
+				bitsRead = 0;
+			}
+			
+			position++;
 		}
-		return new HiddenMessage(dataArray);		
+		
+		return new HiddenMessage(data);
 	}
 
 }

@@ -72,6 +72,15 @@ public class DCTMatrix {
 		}
 		return result;
 	}
+
+	public void setValue(int position, int value) {
+		if(position ==0) {
+			this.setDC(value);
+		}else {
+			this.setAC(position, value);
+		}
+		
+	}
 	
 	
 }
