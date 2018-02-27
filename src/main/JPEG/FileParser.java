@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class FileParser {
@@ -64,10 +65,13 @@ public class FileParser {
 				{
 					this.status = Status.READFF;
 				}
-				else if (c == 192) //0xC0 Start of Frame Marker
+				else if (c == 192 || (c>=0xC0 && c<=0xCF) && c!=0xC4) //0xC0 Start of Frame Marker
 				{
 					if (this.status == Status.READFF)
 					{
+						if(c!=192) {
+							System.out.println("warning no baseline DCT!!: "+c);
+						}
 						List<Integer> x = this.readNextSegment(in);
 						this.sofMarker = new StartOfFrameMarker(x);
 					}
@@ -194,6 +198,13 @@ public class FileParser {
 		if (this.huffmantables[1] == null)
 		{
 			this.huffTables = new HuffmanTable(this.huffmantables[0]);
+		}
+		else if(this.huffmantables[0]!=null && this.huffmantables[1]!=null && this.huffmantables[2]==null && this.huffmantables[3]==null) {
+			Object[] lac = Arrays.copyOf(this.huffmantables[0], this.huffmantables[0].length);
+			lac[2] = 16;
+			Object[] cac = Arrays.copyOf(this.huffmantables[1], this.huffmantables[1].length);
+			cac[2] = 17;
+			this.huffTables = new HuffmanTable(this.huffmantables[0], this.huffmantables[1], lac, cac);
 		}
 		else
 		{
