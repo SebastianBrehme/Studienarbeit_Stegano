@@ -11,7 +11,7 @@ public class DCTJsteg implements DCTMatrixLSB {
 	@Override
 	public List<List<DCTMatrix>> hideMessage(List<List<DCTMatrix>> stack, HiddenMessage message) {
 		
-		message = HiddenMessage.addLengthInfor(message);
+		message = HiddenMessage.addLengthInformation(message);
 		
 		DCTStream dctstream = new DCTStream(stack);
 		int position = 0;
@@ -73,7 +73,10 @@ public class DCTJsteg implements DCTMatrixLSB {
 			position++;
 		}
 		
-		messageLength = header[0]*256*256*256+header[1]*256*256+header[2]*256+header[3];
+		if(header[4]!=0) {
+			System.err.println("Error in reconstruction of message");
+		}
+		messageLength = HiddenMessage.getLengthInfo(header); // header[0]*256*256*256+header[1]*256*256+header[2]*256+header[3];
 		byte[] data = new byte[messageLength];
 		int index = 0;
 		
