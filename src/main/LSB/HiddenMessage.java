@@ -9,6 +9,8 @@ public class HiddenMessage {
 	byte[] data;
 	int byteIndex = 0;
 	int bitIndex = 0;
+	
+	private static int factor = 128;
 
 	public HiddenMessage() {
 		data = new byte[0];
@@ -30,14 +32,14 @@ public class HiddenMessage {
 		return result;
 	}
 	
-	public static HiddenMessage addLengthInfor(HiddenMessage msg) {
+	public static HiddenMessage addLengthInformation(HiddenMessage msg) {
 		byte[] newData = new byte[msg.data.length+5];
 		System.arraycopy(msg.data, 0, newData, 5, msg.data.length);
 		int length = msg.data.length;
-		byte byte3 = (byte) (length%256);
-		byte byte2 = (byte)((length/256)%256);
-		byte byte1 = (byte)(((length/256)/256)%256);
-		byte byte0 = (byte)((((length/256)/256)/256)%256);
+		byte byte3 = (byte) (length%factor);
+		byte byte2 = (byte)((length/factor)%factor);
+		byte byte1 = (byte)(((length/factor)/factor)%factor);
+		byte byte0 = (byte)((((length/factor)/factor)/factor)%factor);
 		
 		newData[0] = byte0;
 		newData[1] = byte1;
@@ -45,6 +47,16 @@ public class HiddenMessage {
 		newData[3] = byte3;
 		newData[4] = 0;
 		return new HiddenMessage(newData);
+	}
+	
+	public static int getLengthInfo(byte header[]) {
+		for(int i=0;i<5;i++) {
+			if(header[i]<0) {
+				header[i] = (byte) (255-header[i]);
+			}
+		}
+		
+		return header[0]*factor*factor*factor+header[1]*factor*factor+header[2]*factor+header[3];
 	}
 	
 	public boolean hasNext() {
