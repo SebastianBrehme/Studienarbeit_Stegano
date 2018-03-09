@@ -12,7 +12,7 @@ import test.JPEG.TestImageData;
 
 @RunWith(Suite.class)
 @SuiteClasses({ TestBitConverter.class, TestHuffmanDecode.class, TestDCTMatrix.class,
-	TestImageData.class, TestHuffmanEncode.class, TestBitData.class})
+	TestImageData.class, TestHuffmanEncode.class, TestBitData.class, TestPathgenerator.class})
 public class AllTests {
 
 }
