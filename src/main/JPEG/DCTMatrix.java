@@ -82,5 +82,12 @@ public class DCTMatrix {
 		
 	}
 	
-	
+	@Override
+	public DCTMatrix clone() {
+		DCTMatrix matrix = new DCTMatrix(this.matrixType, this.width, this.height);
+		for(int i=0;i<64;i++) {
+			matrix.setValue(i, this.getValue(i));
+		}
+		return matrix;
+	}
 }

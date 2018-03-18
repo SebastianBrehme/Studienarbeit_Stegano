@@ -15,6 +15,13 @@ public class BitConverter {
 		return addUpToLenght(result,8);
 	}
 	
+	public static String convertSignedToBitString(int number) {
+		if(number>=0) {
+			return BitConverter.convertToBitString(number);
+		}
+		return BitConverter.convertToBitString(256+number);
+	}
+	
 	private static String doConvertion(int number) {
 		if(number == 0) {
 			return "0";

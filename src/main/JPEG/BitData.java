@@ -7,7 +7,7 @@ import main.Util.BitConverter;
 
 public class BitData {
 	private List<List<Integer>> byteData;
-	private List<List<Byte>> bitData;
+	private byte[][] bitData;
 	
 	private int actList = 0;
 	private int actIndex = 0;
@@ -23,7 +23,7 @@ public class BitData {
 	}
 	
 	public boolean lessThan8() {
-		return actIndex+8>=bitData.get(actList).size();
+		return actIndex+8>=bitData[actList].length;
 	}
 	
 	public String cutPartAsString(int start, int end) {
@@ -31,8 +31,8 @@ public class BitData {
 		end+=actIndex;
 		String result = "";
 		for(int i = start;i<end;i++) {
-			if(bitData.get(actList).size()>i) {
-				if(bitData.get(actList).get(i) == 0) {
+			if(bitData[actList].length>i) {
+				if(bitData[actList][i] == 0) {
 					result+="0";
 				}else {
 					result+="1";
@@ -50,7 +50,7 @@ public class BitData {
 	}
 	
 	public boolean hasNextList() {
-		return actList+1<this.bitData.size();
+		return actList+1<this.bitData.length;
 	}
 	
 	
@@ -65,23 +65,27 @@ public class BitData {
 	}
 	
 	private void createBitData() {
-		bitData = new ArrayList<List<Byte>>();
+		bitData = new byte[byteData.size()][];//ArrayList<List<Byte>>();
+		int n = 0;
 		for(List<Integer> tmp: byteData) {
-			bitData.add(integerDataToBits(tmp));
+			bitData[n] = integerDataToBits(tmp);
+			n++;
 		}
 	}
 
-	private List<Byte> integerDataToBits(List<Integer> tmp) {
-		List<Byte> result = new ArrayList<Byte>(tmp.size()*8);
+	private byte[] integerDataToBits(List<Integer> tmp) {
+		byte[] result = new byte[tmp.size()*8];// ArrayList<Byte>(tmp.size());
+		int n =0;
 		for(Integer i:tmp) {
 			String t = BitConverter.convertToBitString(i);
 			for(int j=0;j<t.length();j++) {
 				if(t.charAt(j)=='0') {
-					result.add((byte)0);
+					result[n] = ((byte)0);
 				}
 				else {
-					result.add((byte) 1);
+					result[n] = ((byte) 1);
 				}
+				n++;
 			}
 		}
 		return result;

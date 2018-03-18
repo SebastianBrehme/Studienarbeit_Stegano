@@ -69,7 +69,7 @@ public class HiddenMessage {
 	
 	public int getNext() {
 		byte actuel = data[byteIndex];
-		String bits = BitConverter.convertToBitString(actuel);
+		String bits = BitConverter.convertSignedToBitString(actuel); //the bytes of a string are signed: values from -128 to 127; must be taken into account when calculated
 		int result =  Integer.parseInt(""+bits.charAt(bitIndex));
 		
 		bitIndex++;
@@ -85,6 +85,29 @@ public class HiddenMessage {
 	public String toString() {
 		return "HiddenMessage [String=("+new String(data)+")] [data=" + Arrays.toString(data) + "]";
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.hashCode(data);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		HiddenMessage other = (HiddenMessage) obj;
+		if (!Arrays.equals(data, other.data))
+			return false;
+		return true;
+	}
+	
 	
 	
 

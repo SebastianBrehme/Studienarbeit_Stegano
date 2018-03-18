@@ -25,6 +25,20 @@ public class TestBitConverter {
 	}
 	
 	@Test
+	public void testConvertSignedToBitString() {
+		assertEquals("00000000", BitConverter.convertSignedToBitString(0));
+		assertEquals("00000001", BitConverter.convertSignedToBitString(1));
+		assertEquals("00001010", BitConverter.convertSignedToBitString(10));
+		assertEquals("00110010", BitConverter.convertSignedToBitString(50));
+		assertEquals("01100100", BitConverter.convertSignedToBitString(100));
+		
+		assertEquals("10010110", BitConverter.convertSignedToBitString(-106));
+		assertEquals("11001000", BitConverter.convertSignedToBitString(-56));
+		assertEquals("11100110", BitConverter.convertSignedToBitString(-26));
+		assertEquals("11111111", BitConverter.convertSignedToBitString(-1));
+	}
+	
+	@Test
 	public void testConvertToBitStringWithLength() {
 		assertEquals("0", BitConverter.convertToBitString(0,1));
 		assertEquals("00001", BitConverter.convertToBitString(1,5));
