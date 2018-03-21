@@ -9,6 +9,7 @@ import main.JPEG.DCTMatrix;
 import main.JPEG.FileParser;
 import main.JPEG.HuffmanDecode;
 import main.JPEG.HuffmanEncode;
+import main.JPEG.JPEGParser;
 import main.crypto.SymmetricCryptography;
 import main.steganography.ChangeEmbeder;
 import main.steganography.DCTMatrixLSB;
@@ -112,15 +113,9 @@ public class Main {
 	}
 	
 	public static void hidemymessage() throws IOException {
-		FileParser fileparser = new FileParser();
-		fileparser.setFilePath("TestImages" + File.separator + "cat.jpg");
-		System.gc();
-		fileparser.readFileBytes();
-		System.gc();
-		fileparser.createHuffmanTables();
-		System.gc();
-		HuffmanDecode hc = fileparser.processImageData();
-		System.gc();
+		JPEGParser parser = new JPEGParser("cat.jpg");
+		List<List<DCTMatrix>> dct_data = parser.readJpegFile();
+	
 		
 		DCTMatrixLSB hider = new ChangeEmbeder();
 		
@@ -130,32 +125,20 @@ public class Main {
 		byte[] data = crypto.encrypt(strmsg.getBytes());
 		
 		HiddenMessage msg = new HiddenMessage(data, Type.TEXT);
-		List<List<DCTMatrix>> work = hc.getDecodedData();//Main.cloneList(hc.getDecodedData())
+		List<List<DCTMatrix>> work = dct_data;//Main.cloneList(hc.getDecodedData())
 		work = hider.hideMessageWithKey(work, msg, "test");
 		
-		System.out.println("message Embedded - bevor encoding");
-		HuffmanEncode huffencode = new HuffmanEncode(work, hc.huffmanTable, hc.imageData);
-		huffencode.encode();
-		System.gc();
-		fileparser.writeFileBytes(huffencode);
-		System.gc();
-
+		System.out.println("message Embedded - bevor encoding");		
+		parser.writeJpegFile(work);		
 		System.out.println("Write Done");
 	}
 	
-	public static void getmymessage() throws IOException {
-		FileParser fileparser = new FileParser();
-		fileparser.setFilePath("TestImages" + File.separator + "cat_new.jpg");
-		System.gc();
-		fileparser.readFileBytes();
-		System.gc();
-		fileparser.createHuffmanTables();
-		System.gc();
-		HuffmanDecode hc = fileparser.processImageData();
-		System.gc();
+	public static void getmymessage() throws IOException {		
+		JPEGParser parser = new JPEGParser("cat_new.jpg");
+		List<List<DCTMatrix>> data = parser.readJpegFile();
 		
 		DCTMatrixLSB hider = new ChangeEmbeder();
-		HiddenMessage msg = hider.recoverMessageWithKey(hc.getDecodedData(), "test");
+		HiddenMessage msg = hider.recoverMessageWithKey(data, "test");
 		SymmetricCryptography crypto = new SymmetricCryptography("meinsuperkeyhier".getBytes());
 		String strmsg = new String(crypto.decrypt(msg.getData()));
 		System.out.println(strmsg);
