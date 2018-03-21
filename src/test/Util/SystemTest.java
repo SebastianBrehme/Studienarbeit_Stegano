@@ -18,9 +18,9 @@ import main.JPEG.DCTMatrix;
 import main.JPEG.FileParser;
 import main.JPEG.HuffmanDecode;
 import main.JPEG.HuffmanEncode;
-import main.LSB.DCTJsteg;
-import main.LSB.DCTMatrixLSB;
-import main.LSB.HiddenMessage;
+import main.steganography.DCTJsteg;
+import main.steganography.DCTMatrixLSB;
+import main.steganography.HiddenMessage;
 
 @RunWith(Parameterized.class)
 public class SystemTest {

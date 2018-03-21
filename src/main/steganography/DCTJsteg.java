@@ -1,4 +1,4 @@
-package main.LSB;
+package main.steganography;
 
 import java.util.ArrayList;
 import java.util.List;

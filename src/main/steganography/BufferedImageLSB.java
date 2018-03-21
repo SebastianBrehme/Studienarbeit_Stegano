@@ -1,4 +1,4 @@
-package main.LSB;
+package main.steganography;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
