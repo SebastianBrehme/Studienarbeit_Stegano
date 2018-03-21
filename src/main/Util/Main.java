@@ -1,4 +1,4 @@
-package main.JPEG;
+package main.Util;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import main.Analysis.Histogram;
+import main.JPEG.DCTMatrix;
+import main.JPEG.FileParser;
+import main.JPEG.HuffmanDecode;
+import main.JPEG.HuffmanEncode;
 import main.crypto.SymmetricCryptography;
 import main.steganography.ChangeEmbeder;
 import main.steganography.DCTMatrixLSB;
