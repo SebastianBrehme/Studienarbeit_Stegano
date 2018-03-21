@@ -1,8 +1,10 @@
-package main.Util;
+package main.steganography.Pathgenerator;
 
 import java.util.LinkedHashSet;
 import java.util.Random;
 import java.util.Set;
+
+import main.Util.DCTStream;
 
 public class Pathgenerator {
 

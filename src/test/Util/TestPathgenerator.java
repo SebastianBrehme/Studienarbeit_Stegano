@@ -16,7 +16,7 @@ import org.junit.Test;
 import main.JPEG.DCTMatrix;
 import main.JPEG.Matrix;
 import main.Util.DCTStream;
-import main.Util.Pathgenerator;
+import main.steganography.Pathgenerator.Pathgenerator;
 
 public class TestPathgenerator {
 

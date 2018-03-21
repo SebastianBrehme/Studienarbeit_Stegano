@@ -8,7 +8,7 @@ import java.util.Set;
 
 import main.JPEG.DCTMatrix;
 import main.Util.DCTStream;
-import main.Util.Pathgenerator;
+import main.steganography.Pathgenerator.Pathgenerator;
 
 public class ChangeEmbeder implements DCTMatrixLSB {
 
