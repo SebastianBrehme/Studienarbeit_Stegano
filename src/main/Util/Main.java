@@ -1,13 +1,10 @@
 package main.Util;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.Analysis.Histogram;
 import main.JPEG.DCTMatrix;
 import main.JPEG.FileParser;
 import main.JPEG.HuffmanDecode;
@@ -16,11 +13,16 @@ import main.crypto.SymmetricCryptography;
 import main.steganography.ChangeEmbeder;
 import main.steganography.DCTMatrixLSB;
 import main.steganography.HiddenMessage;
+import main.steganography.HiddenMessage.Type;
+import test.Util.FileIO;
 
 public class Main {
 
 	public static void main(String[] args) throws IOException {
-		System.out.println("Started");
+		//byte[] data = FileIO.readFile("deutsch.txt");
+		//FileIO.writeFile("test2.txt", data);
+		//System.out.println("Started");
+		
 		Main.hidemymessage();
 		Main.getmymessage();
 
@@ -123,11 +125,11 @@ public class Main {
 		DCTMatrixLSB hider = new ChangeEmbeder();
 		
 		String strmsg = "meine total geheime Nachricht";
+		System.out.println(strmsg);
 		SymmetricCryptography crypto = new SymmetricCryptography("meinsuperkeyhier".getBytes());
 		byte[] data = crypto.encrypt(strmsg.getBytes());
 		
-		HiddenMessage msg = new HiddenMessage(data);
-		System.out.println(msg);
+		HiddenMessage msg = new HiddenMessage(data, Type.TEXT);
 		List<List<DCTMatrix>> work = hc.getDecodedData();//Main.cloneList(hc.getDecodedData())
 		work = hider.hideMessageWithKey(work, msg, "test");
 		

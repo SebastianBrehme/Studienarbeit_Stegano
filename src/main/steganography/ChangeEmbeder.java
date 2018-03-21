@@ -8,6 +8,7 @@ import java.util.Set;
 
 import main.JPEG.DCTMatrix;
 import main.Util.DCTStream;
+import main.steganography.HiddenMessage.Type;
 import main.steganography.Pathgenerator.Pathgenerator;
 
 public class ChangeEmbeder implements DCTMatrixLSB {
@@ -18,7 +19,7 @@ public class ChangeEmbeder implements DCTMatrixLSB {
 	@Override
 	public List<List<DCTMatrix>> hideMessageWithKey(List<List<DCTMatrix>> stack, HiddenMessage message, String key) {
 		usedPositions = new HashSet<Integer>();
-		message = HiddenMessage.addLengthInformation(message);
+		message = HiddenMessage.addHeaderInformation(message);
 		DCTStream stream = new DCTStream(stack);
 		this.createPath(stream, key);
 		
@@ -63,7 +64,7 @@ public class ChangeEmbeder implements DCTMatrixLSB {
 		this.createPath(stream, key);
 		
 		int headerIndex = 0;
-		byte[] header = {0,0,0,0,-1};
+		byte[] header = {0,0,0,0,0,-1};
 		int messageLength = 0;
 		int bitsRead = 0;
 		int actual = 0;		
@@ -81,7 +82,7 @@ public class ChangeEmbeder implements DCTMatrixLSB {
 		
 		List<Byte> tempList = new ArrayList<Byte>();
 		
-		while(headerIndex<5) {
+		while(headerIndex<HiddenMessage.HEADERLENGTH) {
 			for(int offset = 1;offset<64;offset++) {
 				int value = stream.getValueAt(position+offset);
 				if(value==0 || value==1){//) || position+offset%64==0) {
@@ -92,7 +93,7 @@ public class ChangeEmbeder implements DCTMatrixLSB {
 				actual+=(byte)Math.abs(value%2);
 				bitsRead++;
 				
-				if(bitsRead==8 && headerIndex<5) {
+				if(bitsRead==8 && headerIndex<HiddenMessage.HEADERLENGTH) {
 					header[headerIndex] = (byte)actual;
 					headerIndex++;
 					actual = 0;
@@ -120,7 +121,7 @@ public class ChangeEmbeder implements DCTMatrixLSB {
 			}
 		}
 		
-		if(header[4]!=0) {
+		if(header[5]!=0) {
 			System.err.println("Error in reconstruction of message");
 		}
 		
@@ -168,8 +169,8 @@ public class ChangeEmbeder implements DCTMatrixLSB {
 			}
 		}
 		
-		
-		return new HiddenMessage(data);		
+		Type type = Type.TEXT.ordinal() == header[4] ? Type.TEXT : Type.FILE;
+		return new HiddenMessage(data, type);		
 	}
 	
 	

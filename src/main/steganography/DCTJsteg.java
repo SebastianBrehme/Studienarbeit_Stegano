@@ -5,13 +5,14 @@ import java.util.List;
 
 import main.JPEG.DCTMatrix;
 import main.Util.DCTStream;
+import main.steganography.HiddenMessage.Type;
 
 public class DCTJsteg implements DCTMatrixLSB {
 
 	@Override
 	public List<List<DCTMatrix>> hideMessage(List<List<DCTMatrix>> stack, HiddenMessage message) {
 		
-		message = HiddenMessage.addLengthInformation(message);
+		message = HiddenMessage.addHeaderInformation(message);
 		
 		DCTStream dctstream = new DCTStream(stack);
 		int position = 0;
@@ -45,14 +46,14 @@ public class DCTJsteg implements DCTMatrixLSB {
 		
 		DCTStream stream = new DCTStream(stack);
 		int headerIndex = 0;
-		byte[] header = {0,0,0,0,-1};
+		byte[] header = {0,0,0,0,0,-1};
 		int messageLength = 0;
 		int bitsRead = 0;
 		int actual = 0;		
 		int position = 0;
 		
 		
-		while(headerIndex<5) {
+		while(headerIndex<HiddenMessage.HEADERLENGTH) {
 			int value = stream.getValueAt(position);
 			while(value==0 || value==1 || position%64==0) {
 				position++;
@@ -73,7 +74,7 @@ public class DCTJsteg implements DCTMatrixLSB {
 			position++;
 		}
 		
-		if(header[4]!=0) {
+		if(header[5]!=0) {
 			System.err.println("Error in reconstruction of message");
 		}
 		messageLength = HiddenMessage.getLengthInfo(header); // header[0]*256*256*256+header[1]*256*256+header[2]*256+header[3];
@@ -100,8 +101,8 @@ public class DCTJsteg implements DCTMatrixLSB {
 			
 			position++;
 		}
-		
-		return new HiddenMessage(data);
+		Type type = Type.TEXT.ordinal()==header[4] ? Type.TEXT :Type.FILE;
+		return new HiddenMessage(data,type);
 	}
 
 }

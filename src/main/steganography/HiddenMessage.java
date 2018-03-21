@@ -7,35 +7,44 @@ import main.Util.BitConverter;
 public class HiddenMessage {
 
 	byte[] data;
+	Type type;
 	int byteIndex = 0;
 	int bitIndex = 0;
+	public final static int HEADERLENGTH = 6;
+	
+	public enum Type{
+		TEXT,FILE;
+	}
 	
 	private static int factor = 128;
 
 	public HiddenMessage() {
 		data = new byte[0];
+		type = Type.TEXT;
 	}
 	
 	public byte[] getData() {
 		return this.data;
 	}
 	
-	
-	public HiddenMessage(byte[] data) {
-		this.data = data;
+	public Type getType() {
+		return this.type;
 		
 	}
 	
-	public static HiddenMessage addEOMByte(HiddenMessage msg) {
-		byte[] newData = Arrays.copyOf(msg.data, msg.data.length+1);
-		newData[newData.length-1] = (byte) 0;
-		HiddenMessage result =  new HiddenMessage(newData);
-		return result;
+	
+	//public HiddenMessage(byte[] data) {
+	//	this.data = data;	
+	//}
+	
+	public HiddenMessage(byte[] data, Type type) {
+		this.data = data;
+		this.type = type;
 	}
 	
-	public static HiddenMessage addLengthInformation(HiddenMessage msg) {
-		byte[] newData = new byte[msg.data.length+5];
-		System.arraycopy(msg.data, 0, newData, 5, msg.data.length);
+	public static HiddenMessage addHeaderInformation(HiddenMessage msg) {
+		byte[] newData = new byte[msg.data.length+HEADERLENGTH];
+		System.arraycopy(msg.data, 0, newData, HEADERLENGTH, msg.data.length);
 		int length = msg.data.length;
 		byte byte3 = (byte) (length%factor);
 		byte byte2 = (byte)((length/factor)%factor);
@@ -46,8 +55,9 @@ public class HiddenMessage {
 		newData[1] = byte1;
 		newData[2] = byte2;
 		newData[3] = byte3;
-		newData[4] = 0;
-		return new HiddenMessage(newData);
+		newData[4] = (byte) msg.getType().ordinal();
+		newData[5] = 0;
+		return new HiddenMessage(newData, msg.getType());
 	}
 	
 	public static int getLengthInfo(byte header[]) {
