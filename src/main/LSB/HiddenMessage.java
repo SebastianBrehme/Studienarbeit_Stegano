@@ -16,9 +16,10 @@ public class HiddenMessage {
 		data = new byte[0];
 	}
 	
-	public HiddenMessage(String msg) {
-		this.data = msg.getBytes();
+	public byte[] getData() {
+		return this.data;
 	}
+	
 	
 	public HiddenMessage(byte[] data) {
 		this.data = data;
