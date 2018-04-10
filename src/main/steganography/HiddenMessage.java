@@ -8,19 +8,20 @@ public class HiddenMessage {
 
 	byte[] data;
 	Type type;
+	public String filename ="<NOFILENAME>";
 	int byteIndex = 0;
 	int bitIndex = 0;
 	public final static int HEADERLENGTH = 6;
 	
 	public enum Type{
-		TEXT,FILE;
+		TEXT,FILE, NOTDEFINED;
 	}
 	
 	private static int factor = 128;
 
 	public HiddenMessage() {
 		data = new byte[0];
-		type = Type.TEXT;
+		type = Type.NOTDEFINED;
 	}
 	
 	public byte[] getData() {
@@ -39,10 +40,27 @@ public class HiddenMessage {
 	
 	public HiddenMessage(byte[] data, Type type) {
 		this.data = data;
-		this.type = type;
+		this.type = Type.TEXT;
+	}
+	
+	public HiddenMessage(byte[] data, String filename) {
+		this.data = data;
+		this.filename = filename;
+		this.type = Type.NOTDEFINED;
+		HiddenMessage fileHeader = new HiddenMessage(filename.getBytes(), Type.NOTDEFINED);
+		this.addTwoHiddenMessages(fileHeader);
+	}
+	
+	public HiddenMessage(byte[] data, String filename, boolean create) {
+		this.data = data;
+		this.filename=filename;
+		this.type = Type.TEXT;
 	}
 	
 	public static HiddenMessage addHeaderInformation(HiddenMessage msg) {
+		if(msg.type==Type.FILE) {
+			return msg;
+		}
 		byte[] newData = new byte[msg.data.length+HEADERLENGTH];
 		System.arraycopy(msg.data, 0, newData, HEADERLENGTH, msg.data.length);
 		int length = msg.data.length;
@@ -58,6 +76,21 @@ public class HiddenMessage {
 		newData[4] = (byte) msg.getType().ordinal();
 		newData[5] = 0;
 		return new HiddenMessage(newData, msg.getType());
+	}
+	
+	private void addTwoHiddenMessages(HiddenMessage summand) {
+		summand = addHeaderInformation(summand);	
+		summand.data[4] = (byte) Type.FILE.ordinal();
+		HiddenMessage withHeader = addHeaderInformation(this);
+		withHeader.data[4] = (byte) Type.FILE.ordinal();
+		
+		int length = summand.data.length+withHeader.data.length;
+		byte[] new_data = new byte[length];
+		System.arraycopy(summand.data,0,new_data, 0, summand.data.length);
+		System.arraycopy(withHeader.data, 0, new_data, summand.data.length, withHeader.data.length);
+		
+		this.data = new_data;
+		this.type = Type.FILE;
 	}
 	
 	public static int getLengthInfo(byte header[]) {
@@ -94,7 +127,8 @@ public class HiddenMessage {
 
 	@Override
 	public String toString() {
-		return "HiddenMessage [String=("+new String(data)+")] [data=" + Arrays.toString(data) + "]";
+		//return "HiddenMessage [String=("+new String(data)+")] [data=" + Arrays.toString(data) + "]";
+		return "HiddenMessage [data="+ Arrays.toString(data)+ "]";
 	}
 
 	@Override
