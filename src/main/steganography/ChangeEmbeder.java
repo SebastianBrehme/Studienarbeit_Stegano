@@ -105,7 +105,7 @@ public class ChangeEmbeder implements DCTMatrixLSB {
 
 					if (bitsRead == 8 && headerIndex < HiddenMessage.HEADERLENGTH) {
 						header[headerIndex] = (byte) actual;
-						System.out.println(actual);
+						//System.out.println(actual);
 						headerIndex++;
 						actual = 0;
 						bitsRead = 0;
@@ -125,7 +125,7 @@ public class ChangeEmbeder implements DCTMatrixLSB {
 			byte[] data = new byte[messageLength];
 			int index = 0;
 
-			for (; index < tempList.size() && messageLength != 0; index++) {
+			for (; index < tempList.size() && messageLength != 0 && index<data.length; index++) {
 				data[index] = tempList.get(index);
 			}
 
@@ -168,9 +168,9 @@ public class ChangeEmbeder implements DCTMatrixLSB {
 			} else {
 				if (fileHeader == null) {
 					fileHeader = new HiddenMessage(data, Type.TEXT);
-					System.out.println(fileHeader);
+					//System.out.println(fileHeader);
 				} else {
-					return new HiddenMessage(data, new String(fileHeader.data), false);
+					return new HiddenMessage(data, fileHeader.data, false);
 				}
 			}
 		}
@@ -216,7 +216,7 @@ public class ChangeEmbeder implements DCTMatrixLSB {
 			stream.setValueAt(startPos, nextValue);
 
 		} catch (NoChangePossibleException e) {
-			System.err.println("nochange");
+			//System.err.println("nochange");
 			nextValue = stream.getValueAt(startPos);
 			if (nextValue > 0) {
 				stream.setValueAt(startPos, ++nextValue);

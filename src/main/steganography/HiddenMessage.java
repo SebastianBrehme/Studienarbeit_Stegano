@@ -8,7 +8,7 @@ public class HiddenMessage {
 
 	byte[] data;
 	Type type;
-	public String filename ="<NOFILENAME>";
+	public byte[] filename ="<NOFILENAME>".getBytes();
 	int byteIndex = 0;
 	int bitIndex = 0;
 	public final static int HEADERLENGTH = 6;
@@ -43,15 +43,15 @@ public class HiddenMessage {
 		this.type = Type.TEXT;
 	}
 	
-	public HiddenMessage(byte[] data, String filename) {
+	public HiddenMessage(byte[] data, byte[] filename) {
 		this.data = data;
 		this.filename = filename;
 		this.type = Type.NOTDEFINED;
-		HiddenMessage fileHeader = new HiddenMessage(filename.getBytes(), Type.NOTDEFINED);
+		HiddenMessage fileHeader = new HiddenMessage(filename, Type.NOTDEFINED);
 		this.addTwoHiddenMessages(fileHeader);
 	}
 	
-	public HiddenMessage(byte[] data, String filename, boolean create) {
+	public HiddenMessage(byte[] data, byte[] filename, boolean create) {
 		this.data = data;
 		this.filename=filename;
 		this.type = Type.TEXT;

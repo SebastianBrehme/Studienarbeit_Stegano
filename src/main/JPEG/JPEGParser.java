@@ -18,7 +18,7 @@ public class JPEGParser {
 	public List<List<DCTMatrix>> readJpegFile() {
 		try {
 			fileparser = new FileParser();
-			fileparser.setFilePath("TestImages" + File.separator + this.path);
+			fileparser.setFilePath(this.path);
 			System.gc();
 			fileparser.readFileBytes();
 			System.gc();
